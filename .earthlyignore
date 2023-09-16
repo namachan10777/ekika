@@ -1,1 +1,2 @@
 target/*
+micropub-ui/node_modules/*

@@ -1,3 +1,3 @@
 [workspace]
-members = ["micropub", "axum-helper"]
+members = ["micropub", "axum-helper", "activitypub"]
 resolver = "2"
