@@ -38,3 +38,11 @@ image:
     COPY +release-bin/bin /app
     ENV RUST_LOG=micropub=Info
     ENTRYPOINT [ "/app" ]
+
+compose-locally:
+    LOCALLY
+    RUN ls
+    WITH DOCKER \
+        --load namachan10777/micropub:latest=+image
+        RUN docker compose up
+    END

@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  app:
+    image: namachan10777/micropub:latest
+    command: --addr 0.0.0.0:8080
+  dynamodb:
+    image: "amazon/dynamodb-local:latest"
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    ports:
+      - "8000:8000"
+    volumes:
+      - type: volume
+        source: dynamodb
+        target: /home/dynamodblocal/data
+  minio:
+    image: minio/minio
+    command: server /data --address 0.0.0.0:8000 --console-address 0.0.0.0:9000
+    volumes:
+      - type: volume
+        source: minio
+        target: /data
+    ports:
+      - 9000:9000
+volumes:
+  dynamodb: {}
+  minio: {}
