@@ -3,13 +3,19 @@
 version = 3
 
 [[package]]
+name = "activity-derive"
+version = "0.1.0"
+
+[[package]]
 name = "activitypub"
 version = "0.1.0"
 dependencies = [
+ "activity-derive",
  "anyhow",
  "serde",
  "serde_json",
  "thiserror",
+ "url",
 ]
 
 [[package]]
