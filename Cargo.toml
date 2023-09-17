@@ -1,3 +1,9 @@
 [workspace]
-members = ["micropub", "axum-helper", "activitypub", "activity-derive"]
+members = [
+    "angara",
+    "axum-helper",
+    "activitystreams",
+    "activitystreams-core",
+    "activitystreams-derive",
+]
 resolver = "2"

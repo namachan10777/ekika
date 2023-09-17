@@ -1,5 +1,5 @@
 [package]
-name = "micropub"
+name = "angara"
 version = "0.1.0"
 edition = "2021"
 
@@ -12,7 +12,13 @@ aws-config = "0.56.1"
 aws-sdk-dynamodb = "0.30.0"
 aws-sdk-opensearch = "0.30.0"
 aws-sdk-s3 = "0.30.0"
-axum = { version = "0.6.20", features = ["headers", "tracing", "http2", "multipart", "ws"] }
+axum = { version = "0.6.20", features = [
+    "headers",
+    "tracing",
+    "http2",
+    "multipart",
+    "ws",
+] }
 axum-helper = { version = "0.1.0", path = "../axum-helper" }
 clap = { version = "4.4.3", features = ["derive", "env"] }
 futures-util = "0.3.28"

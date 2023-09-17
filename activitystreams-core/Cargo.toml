@@ -1,0 +1,14 @@
+[package]
+name = "activitystreams-core"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+iref = "2"
+json-ld = "0.15"
+json-ld-core = "0.15"
+locspan = "0.7"
+rdf-types = "0.16.1"
+static-iref = "2"
