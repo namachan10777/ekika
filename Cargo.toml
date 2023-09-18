@@ -1,9 +1,3 @@
 [workspace]
-members = [
-    "angara",
-    "axum-helper",
-    "activitystreams",
-    "activitystreams-core",
-    "activitystreams-derive",
-]
+members = ["angara", "axum-helper", "activity-vocabulary"]
 resolver = "2"

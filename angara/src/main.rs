@@ -1,5 +1,6 @@
 use std::net::SocketAddr;
 
+use angara::types::WebfingerId;
 use axum::{
     headers::{ContentType, Host},
     response::IntoResponse,
@@ -12,7 +13,7 @@ use axum_helper::{
 use clap::Parser;
 use once_cell::sync::Lazy;
 use reqwest::StatusCode;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use serde_json::json;
 use tower_http::trace::TraceLayer;
 use tracing::info;
@@ -55,6 +56,17 @@ async fn host_meta(
     Ok((axum::TypedHeader(ContentType::xml()), txt))
 }
 
+#[derive(Deserialize)]
+struct WebfingerQuery {
+    _resource: WebfingerId,
+}
+
+async fn webfinger(
+    axum::extract::Query(_query): axum::extract::Query<WebfingerQuery>,
+) -> Result<impl IntoResponse, HttpError> {
+    Ok(())
+}
+
 #[derive(Parser)]
 struct Opts {
     #[clap(short, long, env)]
@@ -89,6 +101,7 @@ async fn main() -> anyhow::Result<()> {
 
     let router = axum::Router::new()
         .route("/.well-known/host-meta", routing::get(host_meta))
+        .route("/.well-known/webfinger", routing::get(webfinger))
         .layer(TraceLayer::new_for_http());
     axum::Server::bind(&opts.addr)
         .serve(router.into_make_service())
