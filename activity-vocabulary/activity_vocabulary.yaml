@@ -1,7 +1,0 @@
-Object:
-  type: type
-  properties:
-    - attachment:
-        types:
-          - Object
-          - Link

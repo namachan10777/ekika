@@ -5,14 +5,34 @@ use crate::{
     Collection, Image, Link, LinkableProperty, Person, Property,
 };
 
+///	Describes an object of any kind.
+/// The Object type serves as the base type for
+/// most of the other kinds of objects defined in the Activity Vocabulary,
+/// including other Core types such as [crate::Activity], [crate::IntransitiveActivity], [crate::Collection] and [crate::OrderedCollection].
+/// ```json
+/// {
+///   "@context": "https://www.w3.org/ns/activitystreams",
+///   "type": "Object",
+///   "id": "http://www.test.example/object/1",
+///   "name": "A Simple, non-specific object"
+/// }
+/// ```
 #[derive(Serialize, Deserialize, PartialEq, Clone, Debug, Default)]
 pub struct Object {
+    /// [W3C recommendation](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-attachment)
+    ///
+    /// uri: `https://www.w3.org/ns/activitystreams#attributedTo`
+    ///
+    /// Identifies a resource attached or related to an object that potentially requires special handling.
+    /// The intent is to provide a model that is at least semantically similar to attachments in email.
     #[serde(skip_serializing_if = "LinkableProperty::is_empty")]
     pub attachment: LinkableProperty<ObjectSubtypes>,
     #[serde(
         skip_serializing_if = "LinkableProperty::is_empty",
         rename = "attributedTo"
     )]
+    /// Identifies one or more entities to which this object is attributed.
+    /// The attributed entities might not be Actors. For instance, an object might be attributed to the completion of another activity.
     pub attributed_to: LinkableProperty<ObjectSubtypes>,
     #[serde(skip_serializing_if = "LinkableProperty::is_empty")]
     pub audience: LinkableProperty<ObjectSubtypes>,
