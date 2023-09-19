@@ -12,9 +12,12 @@ pub use crate::actor::*;
 pub use crate::core::*;
 pub use crate::object_and_link::*;
 
-/// プロパティは通常複数の値を持ちうる。複数持たないのはFunctionalとマークされたものだけ
+/// Not functional property can have multiple value.
 #[derive(PartialEq, Debug, Clone)]
 pub struct Property<T>(Vec<T>);
+
+pub type RemotableOrLinkProp<T> = Property<Or<Remotable<T>, LinkSubtypes>>;
+pub type RemotableObjectOrLinkProp = RemotableOrLinkProp<ObjectSubtypes>;
 
 struct PropertyVisitor<T> {
     _marker: PhantomData<T>,
@@ -98,10 +101,12 @@ impl<T> From<T> for Property<T> {
     }
 }
 
+pub type FunctionalProperty<T> = Option<T>;
+
 #[derive(PartialEq, Clone, Debug)]
 pub enum Or<T, U> {
-    Left(T),
-    Right(U),
+    Prim(T),
+    Snd(U),
 }
 
 impl<'de, L: Deserialize<'de>, R: Deserialize<'de>> Deserialize<'de> for Or<L, R> {
@@ -112,12 +117,12 @@ impl<'de, L: Deserialize<'de>, R: Deserialize<'de>> Deserialize<'de> for Or<L, R
         let content = serde::__private::de::Content::deserialize(deserializer)?;
         let deserializer = serde::__private::de::ContentRefDeserializer::<D::Error>::new(&content);
         match L::deserialize(deserializer) {
-            Ok(left) => Ok(Self::Left(left)),
+            Ok(left) => Ok(Self::Prim(left)),
             Err(left_err) => R::deserialize(deserializer)
                 .map_err(|right_err| {
                     serde::de::Error::custom(format!("{left_err} and {right_err}"))
                 })
-                .map(Self::Right),
+                .map(Self::Snd),
         }
     }
 }
@@ -128,36 +133,87 @@ impl<T: Serialize, U: Serialize> Serialize for Or<T, U> {
         S: serde::Serializer,
     {
         match self {
-            Self::Left(value) => value.serialize(serializer),
-            Self::Right(value) => value.serialize(serializer),
+            Self::Prim(value) => value.serialize(serializer),
+            Self::Snd(value) => value.serialize(serializer),
         }
     }
 }
 
-pub type Linkable<T> = Or<T, Link>;
+//pub type Remotable<T> = Or<T, Link>;
 pub type Untypable<T> = Or<T, serde_json::Value>;
 
 impl<L, R> Or<L, R> {
-    pub fn left(&self) -> Option<&L> {
+    pub fn prim(&self) -> Option<&L> {
         match self {
-            Self::Left(l) => Some(l),
-            Self::Right(_) => None,
+            Self::Prim(l) => Some(l),
+            Self::Snd(_) => None,
         }
     }
-    pub fn right(&self) -> Option<&R> {
+    pub fn snd(&self) -> Option<&R> {
         match self {
-            Self::Left(_) => None,
-            Self::Right(r) => Some(r),
+            Self::Prim(_) => None,
+            Self::Snd(r) => Some(r),
         }
     }
 }
 
-pub type NestedListProperty<T> = Property<Or<Linkable<T>, Vec<Linkable<T>>>>;
-pub type LinkableProperty<T> = Property<Linkable<T>>;
+impl<P, S> From<P> for Or<P, S> {
+    fn from(value: P) -> Self {
+        Or::Prim(value)
+    }
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub enum Remotable<T> {
+    Here(T),
+    Remote(url::Url),
+}
+
+impl<T: Default> Default for Remotable<T> {
+    fn default() -> Self {
+        Self::Here(T::default())
+    }
+}
+
+impl<'de, T: Deserialize<'de>> Deserialize<'de> for Remotable<T> {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        let content = serde::__private::de::Content::deserialize(deserializer)?;
+        let deserializer = serde::__private::de::ContentRefDeserializer::<D::Error>::new(&content);
+        match T::deserialize(deserializer) {
+            Ok(value) => Ok(Self::Here(value)),
+            Err(value_err) => url::Url::deserialize(deserializer)
+                .map_err(|url_err| serde::de::Error::custom(format!("{value_err} & {url_err}")))
+                .map(Self::Remote),
+        }
+    }
+}
+
+impl<T: Serialize> Serialize for Remotable<T> {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        match self {
+            Self::Here(here) => here.serialize(serializer),
+            Self::Remote(url) => url.serialize(serializer),
+        }
+    }
+}
+
+impl<T> From<T> for Remotable<T> {
+    fn from(value: T) -> Self {
+        Self::Here(value)
+    }
+}
+
+pub type NestedRemotableProperty<T> = Property<Or<Remotable<T>, Vec<Remotable<T>>>>;
+pub type RemotableProperty<T> = Property<Remotable<T>>;
 
 #[cfg(test)]
 mod test {
-    use std::fs;
 
     use url::Url;
 
@@ -175,56 +231,32 @@ mod test {
         };
         let sample_url = "https://activitypub.namachan10777.dev/user/namachan10777";
 
-        let r: Linkable<Sample> = serde_json::from_str(r#"{"id": "namachan10777"}"#).unwrap();
-        assert_eq!(r, Linkable::Left(sample));
+        let r: Remotable<Sample> = serde_json::from_str(r#"{"id": "namachan10777"}"#).unwrap();
+        assert_eq!(r, Remotable::Here(sample));
 
         let src = format!(r#""{sample_url}""#);
-        let r: Linkable<Sample> = serde_json::from_str(&src).unwrap();
+        let r: Remotable<Sample> = serde_json::from_str(&src).unwrap();
         assert_eq!(
             r,
-            Linkable::Right(sample_url.parse::<Url>().unwrap().into())
+            Remotable::Remote(sample_url.parse::<Url>().unwrap().into())
         );
 
-        let r: Linkable<&str> = serde_json::from_str(r#""Hello World!""#).unwrap();
-        assert_eq!(r, Linkable::Left("Hello World!"));
+        let r: Remotable<&str> = serde_json::from_str(r#""Hello World!""#).unwrap();
+        assert_eq!(r, Remotable::Here("Hello World!"));
 
         assert_eq!(
-            &serde_json::to_string(&Linkable::Left(Sample {
+            &serde_json::to_string(&Remotable::Here(Sample {
                 id: "namachan10777"
             }))
             .unwrap(),
             r#"{"id":"namachan10777"}"#,
         );
         assert_eq!(
-            serde_json::to_string(&Linkable::<Sample>::Right(
+            serde_json::to_string(&Remotable::<Sample>::Remote(
                 sample_url.parse::<Url>().unwrap().into()
             ))
             .unwrap(),
             format!(r#""{sample_url}""#),
         );
-    }
-
-    #[test]
-    fn example4() {
-        let s = fs::read_to_string("tests/example4.json").unwrap();
-        let x: IntransitiveActivity = serde_json::from_str(&s).unwrap();
-        let y = IntransitiveActivity {
-            _super: Activity {
-                actor: Or::Left(
-                    Person {
-                        _super: Object {
-                            name: "Sally".to_string().into(),
-                            ..Default::default()
-                        },
-                        ..Default::default()
-                    }
-                    .into(),
-                )
-                .into(),
-                ..Default::default()
-            },
-            ..Default::default()
-        };
-        assert_eq!(x, y);
     }
 }

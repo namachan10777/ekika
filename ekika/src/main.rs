@@ -1,6 +1,5 @@
 use std::net::SocketAddr;
 
-use angara::types::WebfingerId;
 use axum::{
     headers::{ContentType, Host},
     response::IntoResponse,
@@ -11,6 +10,7 @@ use axum_helper::{
     HttpError, ToHttpErrorJson,
 };
 use clap::Parser;
+use ekika::types::WebfingerId;
 use once_cell::sync::Lazy;
 use reqwest::StatusCode;
 use serde::{Deserialize, Serialize};
