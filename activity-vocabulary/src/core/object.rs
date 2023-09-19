@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
+    def_subtypes,
     xsd::{self, LangContainer},
     Activity, Collection, CollectionPage, CollectionSubtypes, FunctionalProperty,
     IntransitiveActivity, Link, OrderedCollection, OrderedCollectionPage, Property,
@@ -106,28 +107,17 @@ pub struct Object {
     pub duration: FunctionalProperty<xsd::DateTime>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
-#[serde(tag = "type")]
-pub enum ObjectSubtypes {
-    Object(Object),
-    Activity(Activity),
-    IntransitiveActivity(IntransitiveActivity),
-    Collection(Collection),
-    CollectionPage(CollectionPage),
-    OrderedCollection(OrderedCollection),
-    OrderedCollectionPage(OrderedCollectionPage),
-}
-
-impl From<ObjectSubtypes> for Object {
-    fn from(value: ObjectSubtypes) -> Self {
-        match value {
-            ObjectSubtypes::Object(x) => x.into(),
-            ObjectSubtypes::Activity(x) => x.into(),
-            ObjectSubtypes::IntransitiveActivity(x) => x.into(),
-            ObjectSubtypes::Collection(x) => x.into(),
-            ObjectSubtypes::CollectionPage(x) => x.into(),
-            ObjectSubtypes::OrderedCollection(x) => x.into(),
-            ObjectSubtypes::OrderedCollectionPage(x) => x.into(),
-        }
+def_subtypes!(
+    Object,
+    ObjectSubtypes,
+    [],
+    {
+        Object,
+        Activity,
+        IntransitiveActivity,
+        Collection,
+        CollectionPage,
+        OrderedCollection,
+        OrderedCollectionPage
     }
-}
+);

@@ -1,6 +1,8 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{Collection, CollectionPage, FunctionalProperty, Object};
+use crate::{
+    def_subtypes, Collection, CollectionPage, FunctionalProperty, Object, OrderedCollection,
+};
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone, Default)]
 #[serde(tag = "type")]
@@ -8,25 +10,22 @@ pub struct OrderedCollectionPage {
     #[serde(flatten)]
     pub _super: CollectionPage,
     #[serde(skip_serializing_if = "FunctionalProperty::is_none", rename = "partOf")]
-    start_index: FunctionalProperty<Box<OrderedCollectionPage>>,
+    pub start_index: FunctionalProperty<Box<OrderedCollectionPage>>,
 }
 
 // Cannot impl `From<OrdererdCollectionPage> for OrderedCollection` because OrderedCollection is an alias of Collection.
 
-impl From<OrderedCollectionPage> for CollectionPage {
-    fn from(value: OrderedCollectionPage) -> Self {
-        value._super
-    }
-}
+def_subtypes!(
+    OrderedCollectionPage,
+    OrderedCollectionPageSubtypes,
+    [Object, Collection, CollectionPage],
+    { OrderedCollectionPage }
+);
 
-impl From<OrderedCollectionPage> for Collection {
+impl From<OrderedCollectionPage> for OrderedCollection {
     fn from(value: OrderedCollectionPage) -> Self {
-        value._super.into()
-    }
-}
-
-impl From<OrderedCollectionPage> for Object {
-    fn from(value: OrderedCollectionPage) -> Self {
-        value._super.into()
+        OrderedCollection {
+            _super: value._super._super,
+        }
     }
 }

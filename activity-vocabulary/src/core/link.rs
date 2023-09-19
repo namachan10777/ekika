@@ -1,7 +1,9 @@
 use serde::{Deserialize, Serialize};
 use url::Url;
 
-use crate::{xsd::LangContainer, FunctionalProperty, Property, RemotableObjectOrLinkProp};
+use crate::{
+    def_subtypes, xsd::LangContainer, FunctionalProperty, Property, RemotableObjectOrLinkProp,
+};
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
 pub struct Link {
@@ -40,28 +42,4 @@ impl From<url::Url> for Link {
     }
 }
 
-impl From<Link> for Url {
-    fn from(value: Link) -> Self {
-        value.href
-    }
-}
-
-impl AsRef<Url> for Link {
-    fn as_ref(&self) -> &Url {
-        &self.href
-    }
-}
-
-#[derive(PartialEq, Clone, Debug, Serialize, Deserialize)]
-#[serde(tag = "type")]
-pub enum LinkSubtypes {
-    Link(Link),
-}
-
-impl From<LinkSubtypes> for Link {
-    fn from(value: LinkSubtypes) -> Self {
-        match value {
-            LinkSubtypes::Link(x) => x.into(),
-        }
-    }
-}
+def_subtypes!(Link, LinkSubtypes, [], { Link });

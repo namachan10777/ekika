@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    CollectionPage, FunctionalProperty, LinkSubtypes, Object, ObjectSubtypes, Or,
+    def_subtypes, CollectionPage, FunctionalProperty, LinkSubtypes, Object, ObjectSubtypes, Or,
     OrderedCollection, OrderedCollectionPage, RemotableObjectOrLinkProp, RemotableOrLinkProp,
 };
 
@@ -24,34 +24,14 @@ pub struct Collection {
     pub items: RemotableOrLinkProp<Or<ObjectSubtypes, Vec<RemotableObjectOrLinkProp>>>,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
-#[serde(tag = "type")]
-pub enum CollectionSubtypes {
-    Collection(Collection),
-    CollectionPage(CollectionPage),
-    OrderedCollection(OrderedCollection),
-    OrderedCollectionPage(OrderedCollectionPage),
-}
-
-impl From<Collection> for Object {
-    fn from(value: Collection) -> Self {
-        value._super
+def_subtypes!(
+    Collection,
+    CollectionSubtypes,
+    [Object],
+    {
+        Collection,
+        CollectionPage,
+        OrderedCollection,
+        OrderedCollectionPage
     }
-}
-
-impl From<CollectionSubtypes> for Collection {
-    fn from(value: CollectionSubtypes) -> Self {
-        match value {
-            CollectionSubtypes::Collection(x) => x.into(),
-            CollectionSubtypes::CollectionPage(x) => x.into(),
-            CollectionSubtypes::OrderedCollection(x) => x.into(),
-            CollectionSubtypes::OrderedCollectionPage(x) => x.into(),
-        }
-    }
-}
-
-impl From<CollectionSubtypes> for Object {
-    fn from(value: CollectionSubtypes) -> Self {
-        Into::<Collection>::into(value).into()
-    }
-}
+);
