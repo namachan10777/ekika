@@ -1,4 +1,4 @@
-# Ekika
+# Ekika (WIP)
 
 An ActivityPub implementation.
 
