@@ -2,6 +2,11 @@ use serde::{Deserialize, Serialize};
 
 use crate::{def_subtypes, Object};
 
+/// [W3C recommendation](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-application)
+///
+/// uri: `https://www.w3.org/ns/activitystreams#Application`
+///
+/// Describes a software application.
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Application {
     #[serde(flatten)]
