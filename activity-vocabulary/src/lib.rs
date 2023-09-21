@@ -1,26 +1,18 @@
 use std::marker::PhantomData;
 
 use serde::{de::Visitor, Deserialize, Serialize};
-pub mod activity;
-pub mod actor;
-pub mod core;
 #[macro_use]
 pub mod def_util;
-pub mod object_and_link;
+pub mod vocab;
 pub mod xsd;
-
-pub use crate::activity::*;
-pub use crate::actor::*;
-pub use crate::core::*;
-pub use crate::object_and_link::*;
 
 /// Not functional property can hav
 
 #[derive(PartialEq, Clone, Debug)]
 pub struct Property<T>(Vec<T>);
 
-pub type RemotableOrLinkProp<T> = Property<Or<Remotable<T>, LinkSubtypes>>;
-pub type RemotableObjectOrLinkProp = RemotableOrLinkProp<ObjectSubtypes>;
+pub type RemotableOrLinkProp<T> = Property<Or<Remotable<T>, vocab::LinkSubtypes>>;
+pub type RemotableObjectOrLinkProp = RemotableOrLinkProp<vocab::ObjectSubtypes>;
 
 struct PropertyVisitor<T> {
     _marker: PhantomData<T>,
