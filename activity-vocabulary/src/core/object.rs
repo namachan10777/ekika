@@ -139,6 +139,11 @@ def_subtypes!(
         Remove,
         Undo,
         Travel,
-        Update
+        Update,
+        Application,
+        Group,
+        Organization,
+        Person,
+        Service
     }
 );
