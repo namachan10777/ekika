@@ -4,15 +4,29 @@ use serde::{Deserialize, Serialize};
 
 use crate::{def_subtypes, FunctionalProperty, Object};
 
+/// Units for [Place]
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub enum Unit {
+    /// represents `cm`
     Cm,
+    /// represents `ft`
     Feet,
+    /// represents `in`
     Inches,
+    /// represents `km`
     Km,
+    /// represents `m`
     M,
+    /// represents `mi`
     Miles,
+    /// any units type identified by URL
     Uri(url::Url),
+}
+
+impl Default for Unit {
+    fn default() -> Self {
+        Self::M
+    }
 }
 
 impl FromStr for Unit {
@@ -64,22 +78,73 @@ impl Serialize for Unit {
     }
 }
 
+/// [W3C recommendation](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-place)
+///
+/// uri: `https://www.w3.org/ns/activitystreams#Place`
+///
+/// Represents a logical or physical location. See [5.3 Representing Places](https://www.w3.org/TR/activitystreams-vocabulary/#places) for additional information.
+///
+/// {
+///   "@context": "https://www.w3.org/ns/activitystreams",
+///   "type": "Place",
+///   "name": "Fresno Area",
+///   "latitude": 36.75,
+///   "longitude": 119.7667,
+///   "radius": 15,
+///   "units": "miles"
+/// }
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Place {
     #[serde(flatten)]
     pub _super: Object,
+    /// [W3C recommendation](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-accuracy)
+    ///
+    /// uri: `https://www.w3.org/ns/activitystreams#accuracy`
+    ///
+    /// Indicates the accuracy of position coordinates on a [Place] objects.
+    /// Expressed in properties of percentage. e.g. "94.0" means "94.0% accurate".
     #[serde(skip_serializing_if = "FunctionalProperty::is_none")]
     pub accuracy: FunctionalProperty<f64>,
+    /// [W3C recommendation](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-altitude)
+    ///
+    /// uri: `https://www.w3.org/ns/activitystreams#altitude`
+    ///
+    /// Indicates the altitude of a place.
+    /// The measurement [Place::units] is indicated using the units property.
+    ///
+    /// See also [Unit].
     #[serde(skip_serializing_if = "FunctionalProperty::is_none")]
     pub altitude: FunctionalProperty<f64>,
+    /// [W3C recommendation](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-latitude)
+    ///
+    /// uri: `https://www.w3.org/ns/activitystreams#latitude`
+    ///
+    /// The latitude of a place
     #[serde(skip_serializing_if = "FunctionalProperty::is_none")]
     pub latitude: FunctionalProperty<f64>,
+    /// [W3C recommendation](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-longitude)
+    ///
+    /// uri: `https://www.w3.org/ns/activitystreams#longitude`
+    ///
+    /// The longitude of a place
     #[serde(skip_serializing_if = "FunctionalProperty::is_none")]
     pub longitude: FunctionalProperty<f64>,
+    /// [W3C recommendation](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-radius)
+    ///
+    /// uri: `https://www.w3.org/ns/activitystreams#radius`
+    ///
+    /// The radius from the given latitude and longitude for a [Place].
+    /// The units is expressed by the [Place::units] property.
     #[serde(skip_serializing_if = "FunctionalProperty::is_none")]
     pub radius: FunctionalProperty<f64>,
-    #[serde(skip_serializing_if = "FunctionalProperty::is_none")]
-    pub units: FunctionalProperty<Unit>,
+    /// [W3C recommendation]()
+    ///
+    /// uri: `https://www.w3.org/TR/activitystreams-vocabulary/#dfn-units`
+    ///
+    /// Specifies the measurement units for the [Place::radius] and [Place::altitude] properties on a [Place] object.
+    /// If not specified, the default is assumed to be [Unit::M] for "meters".
+    #[serde(default = "Unit::default")]
+    pub units: Unit,
 }
 
 def_subtypes!(Place, PlaceSubtypes, [Object], { Place });

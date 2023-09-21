@@ -7,6 +7,14 @@ use crate::{def_subtypes, Object};
 /// uri: `https://www.w3.org/ns/activitystreams#Person`
 ///
 /// Represents an individual person.
+///
+/// ```json
+/// {
+///   "@context": "https://www.w3.org/ns/activitystreams",
+///   "type": "Person",
+///   "name": "Sally Smith"
+/// }
+/// ```
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Person {
     #[serde(flatten)]

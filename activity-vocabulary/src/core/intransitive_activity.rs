@@ -12,6 +12,21 @@ use crate::{def_subtypes, Activity, Arrive, Object, Question, Travel};
 ///
 /// Instances of [IntransitiveActivity] are a subtype of [Activity] representing intransitive actions.
 /// The [Activity::object] property is therefore inappropriate for these activities.
+/// ```json
+/// {
+///   "@context": "https://www.w3.org/ns/activitystreams",
+///   "type": "Travel",
+///   "summary": "Sally went to work",
+///   "actor": {
+///     "type": "Person",
+///     "name": "Sally"
+///   },
+///   "target": {
+///     "type": "Place",
+///     "name": "Work"
+///   }
+/// }
+/// ```
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone, Default)]
 pub struct IntransitiveActivity {
     #[serde(flatten)]

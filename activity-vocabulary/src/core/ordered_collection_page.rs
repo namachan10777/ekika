@@ -10,6 +10,25 @@ use crate::{
 ///
 /// Used to represent ordered subsets of items from an [OrderedCollection].
 /// Refer to the [Activity Streams 2.0 Core](https://www.w3.org/TR/activitystreams-core/#dfn-orderedcollectionpage) for a complete description of the [OrderedCollectionPage] object.
+/// ```json
+/// {
+///   "@context": "https://www.w3.org/ns/activitystreams",
+///   "summary": "Page 1 of Sally's notes",
+///   "type": "OrderedCollectionPage",
+///   "id": "http://example.org/foo?page=1",
+///   "partOf": "http://example.org/foo",
+///   "orderedItems": [
+///     {
+///       "type": "Note",
+///       "name": "A Simple Note"
+///     },
+///     {
+///       "type": "Note",
+///       "name": "Another Simple Note"
+///     }
+///   ]
+/// }
+/// ```
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone, Default)]
 #[serde(tag = "type")]
 pub struct OrderedCollectionPage {

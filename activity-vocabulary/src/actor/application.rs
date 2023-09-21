@@ -7,6 +7,13 @@ use crate::{def_subtypes, Object};
 /// uri: `https://www.w3.org/ns/activitystreams#Application`
 ///
 /// Describes a software application.
+/// ```json
+/// {
+///   "@context": "https://www.w3.org/ns/activitystreams",
+///   "type": "Application",
+///   "name": "Exampletron 3000"
+/// }
+/// ```
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Application {
     #[serde(flatten)]

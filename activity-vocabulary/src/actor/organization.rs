@@ -7,6 +7,14 @@ use crate::{def_subtypes, Object};
 /// uri: `https://www.w3.org/ns/activitystreams#Organization`
 ///
 /// Represents an organization.
+///
+/// ```json
+/// {
+///   "@context": "https://www.w3.org/ns/activitystreams",
+///   "type": "Organization",
+///   "name": "Example Co."
+/// }
+/// ```
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Organization {
     #[serde(flatten)]
