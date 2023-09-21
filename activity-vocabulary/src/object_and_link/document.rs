@@ -1,8 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    def_subtypes, Audio, Image, Object, Page, Video,
-};
+use crate::{def_subtypes, Audio, Image, Object, Page, Video};
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Document {

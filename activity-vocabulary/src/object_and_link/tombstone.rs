@@ -1,8 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    def_subtypes, xsd, FunctionalProperty, Object, RemotableProperty,
-};
+use crate::{def_subtypes, xsd, FunctionalProperty, Object, RemotableProperty};
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Tombstone {

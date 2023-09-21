@@ -1,8 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    def_subtypes, FunctionalProperty, Object,
-};
+use crate::{def_subtypes, FunctionalProperty, Object};
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 enum Unit {
