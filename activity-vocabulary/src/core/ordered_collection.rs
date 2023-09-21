@@ -11,14 +11,6 @@ pub struct OrderedCollection {
 def_subtypes!(
     OrderedCollection,
     OrderedCollectionSubtypes,
-    [Object, Collection],
+    [Collection, Object],
     { OrderedCollection, OrderedCollectionPage }
 );
-
-impl std::ops::Deref for OrderedCollection {
-    type Target = Collection;
-
-    fn deref(&self) -> &Self::Target {
-        &self._super
-    }
-}

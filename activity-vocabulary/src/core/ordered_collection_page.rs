@@ -18,21 +18,12 @@ pub struct OrderedCollectionPage {
 def_subtypes!(
     OrderedCollectionPage,
     OrderedCollectionPageSubtypes,
-    [Object, Collection, CollectionPage],
+    [CollectionPage, Collection, Object],
     { OrderedCollectionPage }
 );
 
 impl From<OrderedCollectionPage> for OrderedCollection {
     fn from(value: OrderedCollectionPage) -> Self {
-        OrderedCollection {
-            _super: value._super._super,
-        }
-    }
-}
-
-impl std::ops::Deref for OrderedCollectionPage {
-    type Target = CollectionPage;
-    fn deref(&self) -> &Self::Target {
-        &self._super
+        OrderedCollection { _super: value._super.into() }
     }
 }

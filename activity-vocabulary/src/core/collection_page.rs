@@ -21,17 +21,10 @@ pub struct CollectionPage {
 def_subtypes!(
     CollectionPage,
     CollectionPageSubtypes,
-    [Object, Collection],
+    [Collection, Object],
     {
         CollectionPage,
         OrderedCollectionPage
     }
 );
 
-impl std::ops::Deref for CollectionPage {
-    type Target = Collection;
-
-    fn deref(&self) -> &Self::Target {
-        &self._super
-    }
-}
