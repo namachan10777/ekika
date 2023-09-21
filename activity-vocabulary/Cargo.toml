@@ -1,10 +1,12 @@
 [package]
 name = "activity-vocabulary"
-version = "0.1.0"
+version = "0.0.1"
 edition = "2021"
 authors = ["Masaki Nakano <admin@namachan10777.dev>"]
 categories = ["Parser implementations", "API bindings", "Web programming"]
 keywords = ["activitypub", "activitystreams", "activityvocabulary"]
+description = "Type definitions of Activity Vocabulary 2.0"
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [features]
