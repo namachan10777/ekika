@@ -4,11 +4,22 @@ use crate::{
     def_subtypes, Collection, CollectionPage, FunctionalProperty, Object, OrderedCollection,
 };
 
+/// [W3C recommendation](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-orderedcollectionpage)
+///
+/// uri: `https://www.w3.org/ns/activitystreams#OrderedCollectionPage`
+///
+/// Used to represent ordered subsets of items from an [OrderedCollection].
+/// Refer to the [Activity Streams 2.0 Core](https://www.w3.org/TR/activitystreams-core/#dfn-orderedcollectionpage) for a complete description of the [OrderedCollectionPage] object.
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone, Default)]
 #[serde(tag = "type")]
 pub struct OrderedCollectionPage {
     #[serde(flatten)]
     pub _super: CollectionPage,
+    /// [W3C recommendation](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-startindex)
+    ///
+    /// uri: `https://www.w3.org/ns/activitystreams#startIndex`
+    ///
+    /// A non-negative integer value identifying the relative position within the logical view of a strictly ordered collection.
     #[serde(skip_serializing_if = "FunctionalProperty::is_none", rename = "partOf")]
     pub start_index: FunctionalProperty<Box<OrderedCollectionPage>>,
 }

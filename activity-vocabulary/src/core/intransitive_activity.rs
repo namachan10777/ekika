@@ -5,6 +5,13 @@ use crate::{def_subtypes, Activity, Arrive, Object, Question, Travel};
 /// ## Caution
 /// W3C recommendation says IntransitiveActivity has no properties that come from Object.
 /// But this definition accepts any properties that Object has.
+///
+/// [W3C recommendation](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-intransitiveactivity)
+///
+/// uri: `https://www.w3.org/ns/activitystreams#IntransitiveActivity`
+///
+/// Instances of [IntransitiveActivity] are a subtype of [Activity] representing intransitive actions.
+/// The [Activity::object] property is therefore inappropriate for these activities.
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone, Default)]
 pub struct IntransitiveActivity {
     #[serde(flatten)]

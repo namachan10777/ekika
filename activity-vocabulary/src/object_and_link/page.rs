@@ -5,7 +5,7 @@ use crate::{def_subtypes, Document, Object};
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Page {
     #[serde(flatten)]
-    _super: Document,
+    pub _super: Document,
 }
 
 def_subtypes!(Page, PageSubtypes, [Document, Object], { Page });

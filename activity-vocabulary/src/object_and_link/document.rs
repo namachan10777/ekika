@@ -5,7 +5,7 @@ use crate::{def_subtypes, Audio, Image, Object, Page, Video};
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Document {
     #[serde(flatten)]
-    _super: Object,
+    pub _super: Object,
 }
 
 def_subtypes!(

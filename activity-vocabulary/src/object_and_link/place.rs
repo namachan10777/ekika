@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use crate::{def_subtypes, FunctionalProperty, Object};
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-enum Unit {
+pub enum Unit {
     Cm,
     Feet,
     Inches,
@@ -67,19 +67,19 @@ impl Serialize for Unit {
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Place {
     #[serde(flatten)]
-    _super: Object,
+    pub _super: Object,
     #[serde(skip_serializing_if = "FunctionalProperty::is_none")]
-    accuracy: FunctionalProperty<f64>,
+    pub accuracy: FunctionalProperty<f64>,
     #[serde(skip_serializing_if = "FunctionalProperty::is_none")]
-    altitude: FunctionalProperty<f64>,
+    pub altitude: FunctionalProperty<f64>,
     #[serde(skip_serializing_if = "FunctionalProperty::is_none")]
-    latitude: FunctionalProperty<f64>,
+    pub latitude: FunctionalProperty<f64>,
     #[serde(skip_serializing_if = "FunctionalProperty::is_none")]
-    longitude: FunctionalProperty<f64>,
+    pub longitude: FunctionalProperty<f64>,
     #[serde(skip_serializing_if = "FunctionalProperty::is_none")]
-    radius: FunctionalProperty<f64>,
+    pub radius: FunctionalProperty<f64>,
     #[serde(skip_serializing_if = "FunctionalProperty::is_none")]
-    units: FunctionalProperty<Unit>,
+    pub units: FunctionalProperty<Unit>,
 }
 
 def_subtypes!(Place, PlaceSubtypes, [Object], { Place });
