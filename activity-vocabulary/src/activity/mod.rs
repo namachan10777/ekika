@@ -53,3 +53,5 @@ pub mod travel;
 pub use travel::*;
 pub mod update;
 pub use update::*;
+pub mod view;
+pub use view::*;

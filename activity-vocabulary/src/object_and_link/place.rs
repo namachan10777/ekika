@@ -78,6 +78,7 @@ impl Serialize for Unit {
     }
 }
 
+#[allow(rustdoc::bare_urls)]
 /// [W3C recommendation](https://www.w3.org/TR/activitystreams-vocabulary/#dfn-place)
 ///
 /// uri: `https://www.w3.org/ns/activitystreams#Place`
