@@ -29,3 +29,10 @@ impl From<OrderedCollectionPage> for OrderedCollection {
         }
     }
 }
+
+impl std::ops::Deref for OrderedCollectionPage {
+    type Target = CollectionPage;
+    fn deref(&self) -> &Self::Target {
+        &self._super
+    }
+}

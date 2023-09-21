@@ -17,3 +17,11 @@ def_subtypes!(
     [Object, Activity],
     { IntransitiveActivity }
 );
+
+impl std::ops::Deref for IntransitiveActivity {
+    type Target = Activity;
+
+    fn deref(&self) -> &Self::Target {
+        &self._super
+    }
+}

@@ -35,3 +35,11 @@ def_subtypes!(
         OrderedCollectionPage
     }
 );
+
+impl std::ops::Deref for Collection {
+    type Target = Object;
+
+    fn deref(&self) -> &Self::Target {
+        &self._super
+    }
+}

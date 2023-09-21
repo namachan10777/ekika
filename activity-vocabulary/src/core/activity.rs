@@ -22,3 +22,10 @@ pub struct Activity {
 }
 
 def_subtypes!(Activity, ActivitySubtypes, [Object], { Activity, IntransitiveActivity });
+
+impl std::ops::Deref for Activity {
+    type Target = Object;
+    fn deref(&self) -> &Self::Target {
+        &self._super
+    }
+}
