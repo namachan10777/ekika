@@ -24,6 +24,8 @@ def_subtypes!(
 
 impl From<OrderedCollectionPage> for OrderedCollection {
     fn from(value: OrderedCollectionPage) -> Self {
-        OrderedCollection { _super: value._super.into() }
+        OrderedCollection {
+            _super: value._super.into(),
+        }
     }
 }

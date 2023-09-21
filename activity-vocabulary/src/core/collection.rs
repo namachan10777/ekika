@@ -35,4 +35,3 @@ def_subtypes!(
         OrderedCollectionPage
     }
 );
-

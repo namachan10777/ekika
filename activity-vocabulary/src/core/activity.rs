@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{def_subtypes, IntransitiveActivity, Object, RemotableObjectOrLinkProp};
+use crate::*;
 
 #[derive(Serialize, Deserialize, PartialEq, Debug, Clone, Default)]
 #[serde(tag = "type")]
@@ -21,4 +21,39 @@ pub struct Activity {
     pub instrument: RemotableObjectOrLinkProp,
 }
 
-def_subtypes!(Activity, ActivitySubtypes, [Object], { Activity, IntransitiveActivity });
+def_subtypes!(
+    Activity,
+    ActivitySubtypes,
+    [Object],
+    {
+        Activity,
+        IntransitiveActivity,
+        Accept,
+        TentativeAccept,
+        Add,
+        Announce,
+        Arrive,
+        Block,
+        Create,
+        Delete,
+        Dislike,
+        Flag,
+        Follow,
+        Ignore,
+        Invite,
+        Join,
+        Leave,
+        Like,
+        Listen,
+        Move,
+        Offer,
+        Question,
+        Read,
+        Reject,
+        TentativeReject,
+        Remove,
+        Undo,
+        Travel,
+        Update
+    }
+);

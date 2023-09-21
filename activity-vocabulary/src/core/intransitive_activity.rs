@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{def_subtypes, Activity, Object};
+use crate::{def_subtypes, Activity, Arrive, Object, Question, Travel};
 
 /// ## Caution
 /// W3C recommendation says IntransitiveActivity has no properties that come from Object.
@@ -15,6 +15,5 @@ def_subtypes!(
     IntransitiveActivity,
     IntransitiveActivitySubtypes,
     [Activity, Object],
-    { IntransitiveActivity }
+    { IntransitiveActivity, Arrive, Question, Travel }
 );
-

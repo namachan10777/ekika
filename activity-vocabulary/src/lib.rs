@@ -239,10 +239,7 @@ mod test {
 
         let src = format!(r#""{sample_url}""#);
         let r: Remotable<Sample> = serde_json::from_str(&src).unwrap();
-        assert_eq!(
-            r,
-            Remotable::Remote(sample_url.parse::<Url>().unwrap().into())
-        );
+        assert_eq!(r, Remotable::Remote(sample_url.parse::<Url>().unwrap()));
 
         let r: Remotable<&str> = serde_json::from_str(r#""Hello World!""#).unwrap();
         assert_eq!(r, Remotable::Here("Hello World!"));
@@ -256,7 +253,7 @@ mod test {
         );
         assert_eq!(
             serde_json::to_string(&Remotable::<Sample>::Remote(
-                sample_url.parse::<Url>().unwrap().into()
+                sample_url.parse::<Url>().unwrap()
             ))
             .unwrap(),
             format!(r#""{sample_url}""#),

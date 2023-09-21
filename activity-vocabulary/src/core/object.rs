@@ -1,12 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    def_subtypes,
-    xsd::{self, LangContainer},
-    Activity, Collection, CollectionPage, CollectionSubtypes, FunctionalProperty,
-    IntransitiveActivity, Link, OrderedCollection, OrderedCollectionPage, Property,
-    RemotableObjectOrLinkProp, RemotableOrLinkProp,
-};
+use crate::{xsd::LangContainer, *};
 
 ///	Describes an object of any kind.
 /// The Object type serves as the base type for
@@ -118,6 +112,33 @@ def_subtypes!(
         Collection,
         CollectionPage,
         OrderedCollection,
-        OrderedCollectionPage
+        OrderedCollectionPage,
+        Accept,
+        TentativeAccept,
+        Add,
+        Announce,
+        Arrive,
+        Block,
+        Create,
+        Delete,
+        Dislike,
+        Flag,
+        Follow,
+        Ignore,
+        Invite,
+        Join,
+        Leave,
+        Like,
+        Listen,
+        Move,
+        Offer,
+        Question,
+        Read,
+        Reject,
+        TentativeReject,
+        Remove,
+        Undo,
+        Travel,
+        Update
     }
 );
