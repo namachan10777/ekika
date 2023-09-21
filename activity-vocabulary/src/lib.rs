@@ -215,6 +215,26 @@ impl<T> From<T> for Remotable<T> {
 pub type NestedRemotableProperty<T> = Property<Or<Remotable<T>, Vec<Remotable<T>>>>;
 pub type RemotableProperty<T> = Property<Remotable<T>>;
 
+#[cfg(any(feature = "resolve-remote-webpki", feature = "resolve-remote-native"))]
+impl<T: ToOwned> Remotable<T>
+where
+    T::Owned: serde::de::DeserializeOwned,
+{
+    pub async fn resolve(&self) -> Result<std::borrow::Cow<T>, reqwest::Error> {
+        match self {
+            Self::Here(here) => Ok(std::borrow::Cow::Borrowed(here)),
+            Self::Remote(url) => reqwest::Client::new()
+                .get(url.clone())
+                .header("accept", "application/activity+json")
+                .send()
+                .await?
+                .json::<T::Owned>()
+                .await
+                .map(std::borrow::Cow::Owned),
+        }
+    }
+}
+
 #[cfg(test)]
 mod test {
 
