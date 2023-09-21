@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{xsd::LangContainer, *};
 
-///	Describes an object of any kind.
+/// Describes an object of any kind.
 /// The Object type serves as the base type for
 /// most of the other kinds of objects defined in the Activity Vocabulary,
 /// including other Core types such as [Activity], [IntransitiveActivity], [Collection] and [OrderedCollection].
