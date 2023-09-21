@@ -144,6 +144,18 @@ def_subtypes!(
         Group,
         Organization,
         Person,
-        Service
+        Service,
+        Article,
+        Audio,
+        Document,
+        Event,
+        Image,
+        Note,
+        Page,
+        Place,
+        Profile,
+        Relationship,
+        Tombstone,
+        Video
     }
 );

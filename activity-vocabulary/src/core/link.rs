@@ -2,7 +2,8 @@ use serde::{Deserialize, Serialize};
 use url::Url;
 
 use crate::{
-    def_subtypes, xsd::LangContainer, FunctionalProperty, Property, RemotableObjectOrLinkProp,
+    def_subtypes, xsd::LangContainer, FunctionalProperty, Mention, Property,
+    RemotableObjectOrLinkProp,
 };
 
 #[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
@@ -42,4 +43,4 @@ impl From<url::Url> for Link {
     }
 }
 
-def_subtypes!(Link, LinkSubtypes, [], { Link });
+def_subtypes!(Link, LinkSubtypes, [], { Link, Mention });
