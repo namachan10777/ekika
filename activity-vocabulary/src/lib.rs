@@ -1,8 +1,10 @@
 use std::marker::PhantomData;
 
+use context::Context;
 use serde::{de::Visitor, Deserialize, Serialize};
 #[macro_use]
 pub mod def_util;
+pub mod context;
 pub mod vocab;
 pub mod xsd;
 
@@ -225,6 +227,14 @@ where
                 .map(std::borrow::Cow::Owned),
         }
     }
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+pub struct WithContext<B> {
+    #[serde(rename = "@context")]
+    pub context: Context,
+    #[serde(flatten)]
+    pub body: B,
 }
 
 #[cfg(test)]

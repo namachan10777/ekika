@@ -2,6 +2,7 @@
 macro_rules! def_subtypes {
     ($base:ident, $sub:ident, [ ], { $($name:ident),* }) => {
         #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
+        #[serde(tag = "type")]
         pub enum $sub {
             $( $name($name) ),*
         }
@@ -16,6 +17,7 @@ macro_rules! def_subtypes {
     };
     ($base:ident, $sub:ident, [ $direct_super:ident ], { $($name:ident),* }) => {
         #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
+        #[serde(tag = "type")]
         pub enum $sub {
             $( $name($name) ),*
         }
@@ -57,6 +59,7 @@ macro_rules! def_subtypes {
     };
     ($base:ident, $sub:ident, [ $direct_super:ident, $($super:ident),+ ], { $($name:ident),* }) => {
         #[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
+        #[serde(tag = "type")]
         pub enum $sub {
             $( $name($name) ),*
         }

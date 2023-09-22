@@ -981,6 +981,7 @@ checksum = "a26ae43d7bcc3b814de94796a5e736d4029efb0ee900c12e2d54c993ad1a1e07"
 name = "ekika"
 version = "0.0.1"
 dependencies = [
+ "activity-vocabulary",
  "anyhow",
  "async-trait",
  "aws-config",
@@ -992,6 +993,7 @@ dependencies = [
  "clap",
  "futures-util",
  "handlebars",
+ "maplit",
  "metrics",
  "metrics-exporter-prometheus",
  "mime",
@@ -1523,6 +1525,12 @@ checksum = "6d0d1830bcd151a6fc4aea1369af235b36c1528fe976b8ff678683c9995eade8"
 dependencies = [
  "libc",
 ]
+
+[[package]]
+name = "maplit"
+version = "1.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3e2e65a1a2e43cfcb47a895c4c8b10d1f4a61097f9f254f183aee60cad9c651d"
 
 [[package]]
 name = "match_cfg"

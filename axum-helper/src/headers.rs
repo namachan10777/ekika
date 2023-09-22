@@ -143,3 +143,28 @@ impl Header for XForwardedProto {
         }
     }
 }
+
+pub struct ContentType(pub mime::Mime);
+
+impl Header for ContentType {
+    fn name() -> &'static str {
+        "Content-Type"
+    }
+
+    fn encode<E: Extend<axum::http::HeaderValue>>(&self, values: &mut E) {
+        values.extend(std::iter::once(
+            HeaderValue::from_str(self.0.as_ref()).unwrap(),
+        ));
+    }
+
+    fn decode<'i, I>(values: &mut I) -> Result<Self, axum::headers::Error>
+    where
+        Self: Sized,
+        I: Iterator<Item = &'i axum::http::HeaderValue>,
+    {
+        let mime = values.next().ok_or_else(axum::headers::Error::invalid)?;
+        let mime = mime.to_str().map_err(|_| axum::headers::Error::invalid())?;
+        let mime = mime.parse().map_err(|_| axum::headers::Error::invalid())?;
+        Ok(Self(mime))
+    }
+}

@@ -178,6 +178,16 @@ pub struct HttpError {
     pub status: StatusCode,
 }
 
+impl HttpError {
+    pub fn new_json<M: Serialize>(msg: &M, status: StatusCode) -> Self {
+        HttpError {
+            body: serde_json::to_vec(msg).unwrap().into(),
+            mime: mime::APPLICATION_JSON,
+            status,
+        }
+    }
+}
+
 pub trait ToHttpErrorJson {
     type T;
     type E;
