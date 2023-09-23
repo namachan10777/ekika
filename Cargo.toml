@@ -1,3 +1,13 @@
 [workspace]
-members = ["ekika", "axum-helper", "activity-vocabulary"]
+members = ["ekika", "axum-helper"]
+package.edition = "2021"
+package.version = "0.0.1"
 resolver = "2"
+
+[workspace.dependencies]
+axum = "0.6"
+async-trait = "0.1"
+http = "0.2"
+mime = "0.3"
+serde = "1"
+serde_json = "1"

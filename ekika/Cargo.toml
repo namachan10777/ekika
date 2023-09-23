@@ -1,40 +1,39 @@
 [package]
 name = "ekika"
-version = "0.0.1"
-edition = "2021"
+version.workspace = true
+edition.workspace = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-activity-vocabulary = { version = "0.0.1", path = "../activity-vocabulary" }
-anyhow = { version = "1.0.75", features = ["backtrace"] }
-async-trait = "0.1.73"
-aws-config = "0.56.1"
-aws-sdk-dynamodb = "0.30.0"
-aws-sdk-opensearch = "0.30.0"
-aws-sdk-s3 = "0.30.0"
-axum = { version = "0.6.20", features = [
+anyhow = { version = "1", features = ["backtrace"] }
+async-trait.workspace = true
+aws-config = "0.56"
+aws-sdk-dynamodb = "0.30"
+aws-sdk-opensearch = "0.30"
+aws-sdk-s3 = "0.30"
+axum = { workspace = true, features = [
     "headers",
     "tracing",
     "http2",
     "multipart",
     "ws",
 ] }
-axum-helper = { version = "0.1.0", path = "../axum-helper" }
-clap = { version = "4.4.3", features = ["derive", "env"] }
-futures-util = "0.3.28"
-handlebars = "4.4.0"
-maplit = "1.0.2"
-metrics = "0.21.1"
-metrics-exporter-prometheus = "0.12.1"
-mime = "0.3.17"
-moka = { version = "0.11.3", features = ["future"] }
-once_cell = "1.18.0"
-reqwest = { version = "0.11.20", features = [
+axum-helper = { version = "0.0.1", path = "../axum-helper" }
+clap = { version = "4", features = ["derive", "env"] }
+futures-util = "0.3"
+handlebars = "4"
+maplit = "1"
+metrics = "0.21"
+metrics-exporter-prometheus = "0.12"
+mime.workspace = true
+moka = { version = "0.11", features = ["future"] }
+once_cell = "1.18"
+reqwest = { version = "0.11", features = [
     "json",
     "rustls-tls-native-roots",
 ], default-features = false }
-sentry = { version = "0.31.7", default-features = false, features = [
+sentry = { version = "0.31", default-features = false, features = [
     "rustls",
     "anyhow",
     "backtrace",
@@ -43,12 +42,12 @@ sentry = { version = "0.31.7", default-features = false, features = [
     "tracing",
     "reqwest",
 ] }
-sentry-tracing = { version = "0.31.7", features = ["backtrace"] }
-serde = { version = "1.0.188", features = ["derive"] }
-serde_dynamo = { version = "4.2.5", features = ["aws-sdk-dynamodb+0_30"] }
-serde_json = "1.0.107"
-thiserror = "1.0.48"
-tokio = { version = "1.32.0", features = [
+sentry-tracing = { version = "0.31", features = ["backtrace"] }
+serde = { workspace = true, features = ["derive"] }
+serde_dynamo = { version = "4", features = ["aws-sdk-dynamodb+0_30"] }
+serde_json.workspace = true
+thiserror = "1"
+tokio = { version = "1.32", features = [
     "rt-multi-thread",
     "macros",
     "tracing",
@@ -56,12 +55,12 @@ tokio = { version = "1.32.0", features = [
     "signal",
     "fs",
 ] }
-tower-http = { version = "0.4.4", features = ["trace"] }
-tracing = { version = "0.1.37", features = ["valuable"] }
-tracing-subscriber = { version = "0.3.17", features = [
+tower-http = { version = "0.4", features = ["trace"] }
+tracing = { version = "0.1", features = ["valuable"] }
+tracing-subscriber = { version = "0.3", features = [
     "env-filter",
     "valuable",
     "json",
 ] }
-url = { version = "2.4.1", features = ["serde"] }
-valuable = { version = "0.1.0", features = ["valuable-derive", "derive"] }
+url = { version = "2.4", features = ["serde"] }
+valuable = { version = "0.1", features = ["valuable-derive", "derive"] }
