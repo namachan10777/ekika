@@ -1,24 +1,17 @@
-use std::{
-    collections::{HashMap, HashSet},
-    net::SocketAddr,
-    sync::Arc,
-};
+#![feature(async_fn_in_trait)]
+use std::{collections::HashMap, net::SocketAddr, sync::Arc};
 
-use axum::{headers::Host, response::IntoResponse, routing, Json, TypedHeader};
-use axum_helper::{
-    headers::{XForwardedHost, XForwardedProto},
-    HttpError, ToHttpErrorJson,
-};
+use axum::{response::IntoResponse, routing};
+use axum_helper::{headers::ProxyInfo, HttpError, ToHttpErrorJson};
 use clap::Parser;
 use ekika::model::account::Account;
-use maplit::hashset;
 use once_cell::sync::Lazy;
 use reqwest::StatusCode;
-use serde::{Deserialize, Serialize};
+use serde::Serialize;
 use serde_json::json;
 use tokio::sync::RwLock;
 use tower_http::trace::TraceLayer;
-use tracing::{debug, info};
+use tracing::info;
 
 static TEMPLATES: Lazy<handlebars::Handlebars> = Lazy::new(|| {
     let mut registry = handlebars::Handlebars::new();
@@ -36,23 +29,15 @@ struct HostMetaInput<'a, 'b> {
 
 static XRD_XML: Lazy<mime::Mime> = Lazy::new(|| "application/xrd+xml".parse().unwrap());
 
-async fn host_meta(
-    axum_helper::TypedHeader(x_forwarded_host): axum_helper::TypedHeader<Option<XForwardedHost>>,
-    axum_helper::TypedHeader(x_forwarded_proto): axum_helper::TypedHeader<Option<XForwardedProto>>,
-    TypedHeader(host): TypedHeader<Host>,
-) -> Result<impl IntoResponse, HttpError> {
+async fn host_meta(proxy_info: ProxyInfo) -> Result<impl IntoResponse, HttpError> {
     info!("host-meta");
-    let proto = x_forwarded_proto.unwrap_or(XForwardedProto::Http);
-    let host = x_forwarded_host
-        .map(|host| host.to_string())
-        .unwrap_or_else(|| host.to_string());
 
     let txt = TEMPLATES
         .render(
             "host-meta",
             &HostMetaInput {
-                proto: proto.as_ref(),
-                host: &host,
+                proto: proxy_info.proto.as_ref(),
+                host: &proxy_info.host,
             },
         )
         .map_err(|e| json!({"ok": false, "msg": e.to_string()}))
@@ -67,84 +52,11 @@ struct State {
     accounts: RwLock<HashMap<String, Account>>,
 }
 
-#[derive(Deserialize, Debug)]
-struct WebfingerQuery {
-    resource: url::Url,
-}
+impl ekika::webfinger::AccountStore for State {
+    type ActorInfo = Account;
 
-#[derive(Serialize, Deserialize, Hash, PartialEq, Eq)]
-#[serde(untagged)]
-enum WebfingerLinks {
-    Href {
-        rel: String,
-        #[serde(rename = "type")]
-        mime_type: String,
-        href: url::Url,
-    },
-    Template {
-        rel: String,
-        template: String,
-    },
-}
-
-#[derive(Serialize, Deserialize)]
-struct WebfingerResponse {
-    subject: url::Url,
-    aliases: HashSet<url::Url>,
-    links: HashSet<WebfingerLinks>,
-}
-
-async fn webfinger(
-    axum::extract::Query(query): axum::extract::Query<WebfingerQuery>,
-    axum_helper::TypedHeader(x_forwarded_host): axum_helper::TypedHeader<Option<XForwardedHost>>,
-    axum_helper::TypedHeader(x_forwarded_proto): axum_helper::TypedHeader<Option<XForwardedProto>>,
-    axum::extract::State(state): axum::extract::State<Arc<State>>,
-    TypedHeader(host): TypedHeader<Host>,
-) -> Result<Json<WebfingerResponse>, HttpError> {
-    let host = x_forwarded_host
-        .map(|host| host.to_string())
-        .unwrap_or_else(|| host.to_string());
-    let proto = x_forwarded_proto
-        .map(|proto| proto.as_ref().to_string())
-        .unwrap_or_else(|| "http".to_string());
-    debug!(resource = query.resource.to_string(), "query");
-    if query.resource.scheme() != "acct" {
-        return Err(HttpError::new_json(
-            &json!({"ok": false}),
-            StatusCode::BAD_REQUEST,
-        ));
-    }
-    let account = query
-        .resource
-        .path()
-        .strip_suffix(&format!("@{host}"))
-        .ok_or("not_found")
-        .http_error_json(StatusCode::NOT_FOUND)?;
-    debug!(account = account, "account");
-    if state.accounts.read().await.contains_key(account) {
-        let frontend_profile: url::Url = format!("{proto}://{host}/@{account}").parse().unwrap();
-        let api_endtpoint: url::Url = format!("{proto}://{host}/users/{account}").parse().unwrap();
-        Ok(Json(WebfingerResponse {
-            subject: query.resource,
-            aliases: maplit::hashset![frontend_profile.clone(), api_endtpoint.clone(),],
-            links: hashset! {
-                WebfingerLinks::Href {
-                    rel: "http://webfinger.net/rel/profile-page".to_string(),
-                    mime_type: "text/html".to_string(),
-                    href: frontend_profile,
-                },
-                WebfingerLinks::Href {
-                    rel: "self".to_string(),
-                    mime_type: "application/activity+json".to_string(),
-                    href: api_endtpoint,
-                },
-            },
-        }))
-    } else {
-        Err(HttpError::new_json(
-            &json!({"ok": "false"}),
-            StatusCode::NOT_FOUND,
-        ))
+    async fn query(&self, name: &str) -> Option<Self::ActorInfo> {
+        self.accounts.read().await.get(name).cloned()
     }
 }
 
@@ -197,7 +109,10 @@ async fn main() -> anyhow::Result<()> {
 
     let router = axum::Router::new()
         .route("/.well-known/host-meta", routing::get(host_meta))
-        .route("/.well-known/webfinger", routing::get(webfinger))
+        .route(
+            "/.well-known/webfinger",
+            routing::get(ekika::webfinger::webfinger),
+        )
         .with_state(state)
         .layer(TraceLayer::new_for_http());
     axum::Server::bind(&opts.addr)
