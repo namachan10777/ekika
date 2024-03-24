@@ -26,7 +26,7 @@ clap = { version = "4", features = ["derive", "env"] }
 futures-util = "0.3"
 handlebars = "5"
 maplit = "1"
-metrics = "0.21"
+metrics = "0.22"
 metrics-exporter-prometheus = "0.14"
 mime.workspace = true
 moka = { version = "0.11", features = ["future"] }
