@@ -61,7 +61,7 @@ tracing-subscriber = { version = "0.3", features = [
     "valuable",
     "json",
 ] }
-typed-builder = "0.16.2"
+typed-builder = "0.18.1"
 url = { version = "2.5", features = ["serde"] }
 valuable = { version = "0.1", features = ["valuable-derive", "derive"] }
 
