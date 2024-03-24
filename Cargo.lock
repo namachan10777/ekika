@@ -4,24 +4,24 @@ version = 3
 
 [[package]]
 name = "activity-vocabulary"
-version = "0.0.2"
+version = "0.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "00cd71ff07a9d96658ab6c3f0380c9795fa5e1222f9d5b0227b71f42749c636b"
+checksum = "56e26097d9e58ddf15f10f94f38271b73f1cd90e66c7fdccd892259f551759d9"
 dependencies = [
  "activity-vocabulary-core",
- "activity-vocabulary-derive",
+ "activity-vocabulary-derive 0.0.4",
  "serde",
  "serde-value",
  "serde_yaml",
- "typed-builder",
+ "typed-builder 0.18.1",
  "url",
 ]
 
 [[package]]
 name = "activity-vocabulary-core"
-version = "0.0.2"
+version = "0.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9793ef09ee46975e7b194f5de379a5c5ffb053c438f51e82d8d8c12d7e7bf9a5"
+checksum = "b2687d1bbd8870aea72d531044c1215e2615b98eb49047ba83e2d3c4a39768de"
 dependencies = [
  "chrono",
  "nom",
@@ -36,6 +36,23 @@ name = "activity-vocabulary-derive"
 version = "0.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "83b640d8be41cbec8fc2a63d5d6b8ddd21b18c48b55cc323bbf17b3d755fdab1"
+dependencies = [
+ "anyhow",
+ "maplit",
+ "proc-macro2",
+ "quote",
+ "rust-format",
+ "serde",
+ "serde_json",
+ "serde_yaml",
+ "syn 2.0.55",
+]
+
+[[package]]
+name = "activity-vocabulary-derive"
+version = "0.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2d8885b6062f2210d0dedde3aacb3558a787a6dda4dd7fd9309fc0aec1ec788d"
 dependencies = [
  "anyhow",
  "maplit",
@@ -1014,7 +1031,7 @@ version = "0.0.1"
 dependencies = [
  "activity-vocabulary",
  "activity-vocabulary-core",
- "activity-vocabulary-derive",
+ "activity-vocabulary-derive 0.0.2",
  "anyhow",
  "async-trait",
  "aws-config",
@@ -1047,7 +1064,7 @@ dependencies = [
  "tower-http",
  "tracing",
  "tracing-subscriber",
- "typed-builder",
+ "typed-builder 0.16.2",
  "url",
  "valuable",
 ]
@@ -3135,7 +3152,16 @@ version = "0.16.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "34085c17941e36627a879208083e25d357243812c30e7d7387c3b954f30ade16"
 dependencies = [
- "typed-builder-macro",
+ "typed-builder-macro 0.16.2",
+]
+
+[[package]]
+name = "typed-builder"
+version = "0.18.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "444d8748011b93cb168770e8092458cb0f8854f931ff82fdf6ddfbd72a9c933e"
+dependencies = [
+ "typed-builder-macro 0.18.1",
 ]
 
 [[package]]
@@ -3143,6 +3169,17 @@ name = "typed-builder-macro"
 version = "0.16.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f03ca4cb38206e2bef0700092660bb74d696f808514dae47fa1467cbfe26e96e"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.55",
+]
+
+[[package]]
+name = "typed-builder-macro"
+version = "0.18.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "563b3b88238ec95680aef36bdece66896eaa7ce3c0f1b4f39d38fb2435261352"
 dependencies = [
  "proc-macro2",
  "quote",

@@ -6,8 +6,8 @@ edition.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-activity-vocabulary = "0.0.2"
-activity-vocabulary-core = "0.0.2"
+activity-vocabulary = "0.0.4"
+activity-vocabulary-core = "0.0.4"
 anyhow = { version = "1", features = ["backtrace"] }
 async-trait.workspace = true
 aws-config = "0.56"
