@@ -1477,11 +1477,12 @@ GEM
       ansi
       ast
     ruby-progressbar (1.13.0)
-    rufo (0.16.2)
+    rufo (0.17.1)
     unicode-display_width (2.5.0)
 
 PLATFORMS
   arm64-darwin-23
+  x86_64-linux
 
 DEPENDENCIES
   aws-sdk
