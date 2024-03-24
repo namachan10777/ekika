@@ -10,10 +10,10 @@ activity-vocabulary = "0.0.2"
 activity-vocabulary-core = "0.0.2"
 anyhow = { version = "1", features = ["backtrace"] }
 async-trait.workspace = true
-aws-config = "0.56"
-aws-sdk-dynamodb = "0.30"
-aws-sdk-opensearch = "0.30"
-aws-sdk-s3 = "0.30"
+aws-config = "1.1"
+aws-sdk-dynamodb = "1.19"
+aws-sdk-opensearch = "1.21"
+aws-sdk-s3 = "1.20"
 axum = { workspace = true, features = ["tracing", "http2", "multipart", "ws"] }
 axum-extra = { workspace = true, features = ["typed-header"] }
 axum-helper = { version = "0.0.1", path = "../axum-helper" }
