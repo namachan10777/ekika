@@ -9,7 +9,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "56e26097d9e58ddf15f10f94f38271b73f1cd90e66c7fdccd892259f551759d9"
 dependencies = [
  "activity-vocabulary-core",
- "activity-vocabulary-derive 0.0.4",
+ "activity-vocabulary-derive",
  "serde",
  "serde-value",
  "serde_yaml",
@@ -29,23 +29,6 @@ dependencies = [
  "serde-value",
  "serde_json",
  "url",
-]
-
-[[package]]
-name = "activity-vocabulary-derive"
-version = "0.0.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "83b640d8be41cbec8fc2a63d5d6b8ddd21b18c48b55cc323bbf17b3d755fdab1"
-dependencies = [
- "anyhow",
- "maplit",
- "proc-macro2",
- "quote",
- "rust-format",
- "serde",
- "serde_json",
- "serde_yaml",
- "syn 2.0.55",
 ]
 
 [[package]]
@@ -1031,7 +1014,7 @@ version = "0.0.1"
 dependencies = [
  "activity-vocabulary",
  "activity-vocabulary-core",
- "activity-vocabulary-derive 0.0.2",
+ "activity-vocabulary-derive",
  "anyhow",
  "async-trait",
  "aws-config",
