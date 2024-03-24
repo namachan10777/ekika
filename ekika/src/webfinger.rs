@@ -2,10 +2,10 @@ use std::{collections::HashSet, sync::Arc};
 
 use axum::Json;
 use axum_helper::{headers::ProxyInfo, HttpError, ToHttpErrorJson};
-use futures_util::Future;
 use maplit::hashset;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
+use std::future::Future;
 use tracing::debug;
 
 use crate::model::account::Account;

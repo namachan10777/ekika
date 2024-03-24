@@ -6,33 +6,28 @@ edition.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-activity-vocabulary = "0.0.5"
-activity-vocabulary-core = "0.0.5"
-anyhow = { version = "1", features = ["backtrace"] }
 async-trait.workspace = true
+activity-vocabulary.workspace = true
+activity-vocabulary-core.workspace = true
+anyhow.workspace = true
 aws-config = "1.1"
 aws-sdk-dynamodb = "1.19"
 aws-sdk-opensearch = "1.21"
 aws-sdk-s3 = "1.20"
-axum = { workspace = true, features = ["tracing", "http2", "multipart", "ws"] }
-axum-extra = { workspace = true, features = ["typed-header"] }
+axum.workspace = true
+axum-extra.workspace = true
 axum-helper = { version = "0.0.1", path = "../axum-helper" }
+handlebars.workspace = true
 clap = { version = "4", features = ["derive", "env"] }
-futures-util = "0.3"
-handlebars = "5"
 http = { workspace = true }
 maplit = "1"
-metrics = "0.22"
+metrics.workspace = true
 metrics-exporter-prometheus = { version = "0.14", default-features = false, features = [
     "http-listener",
 ] }
+moka.workspace = true
 mime.workspace = true
-moka = { version = "0.12", features = ["future"] }
 once_cell = "1.19"
-reqwest = { version = "0.11", features = [
-    "json",
-    "rustls-tls-native-roots",
-], default-features = false }
 sentry = { version = "0.32", default-features = false, features = [
     "rustls",
     "anyhow",
@@ -44,29 +39,22 @@ sentry = { version = "0.32", default-features = false, features = [
 ] }
 sentry-tracing = { version = "0.32", features = ["backtrace"] }
 serde = { workspace = true, features = ["derive"] }
-serde-value = "0.7.0"
+serde-value.workspace = true
 serde_dynamo = { version = "4", features = ["aws-sdk-dynamodb+1"] }
 serde_json.workspace = true
-thiserror = "1"
-tokio = { version = "1.36", features = [
-    "rt-multi-thread",
-    "macros",
-    "tracing",
-    "sync",
-    "signal",
-    "fs",
-] }
-tower-http = { version = "0.5", features = ["trace"] }
-tracing = { version = "0.1", features = ["valuable"] }
+thiserror.workspace = true
+tokio.workspace = true
+tower-http.workspace = true
+tracing.workspace = true
 tracing-subscriber = { version = "0.3", features = [
     "env-filter",
     "valuable",
     "json",
 ] }
-typed-builder = "0.18.1"
-url = { version = "2.5", features = ["serde"] }
-valuable = { version = "0.1", features = ["valuable-derive", "derive"] }
+typed-builder.workspace = true
+url.workspace = true
+valuable.workspace = true
 
 [build-dependencies]
-activity-vocabulary-derive = { version = "0.0.5" }
-serde_yaml = "0.9.33"
+activity-vocabulary-derive.workspace = true
+serde_yaml.workspace = true
