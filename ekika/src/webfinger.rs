@@ -2,6 +2,7 @@ use std::{collections::HashSet, sync::Arc};
 
 use axum::Json;
 use axum_helper::{headers::ProxyInfo, HttpError, ToHttpErrorJson};
+use futures_util::Future;
 use maplit::hashset;
 use reqwest::StatusCode;
 use serde::{Deserialize, Serialize};
@@ -39,7 +40,10 @@ pub struct WebfingerResponse {
 
 pub trait AccountStore {
     type ActorInfo;
-    async fn query(&self, name: &str) -> Result<Option<Self::ActorInfo>, HttpError>;
+    fn query(
+        &self,
+        name: &str,
+    ) -> impl Future<Output = Result<Option<Self::ActorInfo>, HttpError>> + Send;
 }
 
 pub async fn webfinger<S>(

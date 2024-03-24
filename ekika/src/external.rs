@@ -1,11 +1,15 @@
 use axum_helper::HttpError;
+use std::future::Future;
 
 use crate::model;
 
 pub trait ActivityPub {
-    async fn get_profile(&self) -> Result<model::account::Account, HttpError>;
+    fn get_profile(
+        &self,
+    ) -> impl Future<Output = Result<model::account::Account, HttpError>> + Send;
 }
 pub struct ActivityPubServer<S> {
+    #[allow(dead_code)]
     service: S,
 }
 

@@ -211,8 +211,8 @@ fn parse_forwared(src: &str) -> IResult<&str, Forwarded> {
     Ok((
         src,
         Forwarded {
-            proto: pairs.get("proto").map(|v| *v),
-            host: pairs.get("host").map(|v| *v),
+            proto: pairs.get("proto").copied(),
+            host: pairs.get("host").copied(),
         },
     ))
 }

@@ -1,4 +1,3 @@
-#![feature(async_fn_in_trait)]
 use std::{net::SocketAddr, sync::Arc};
 
 use aws_sdk_dynamodb::types::AttributeValue;
@@ -13,6 +12,7 @@ use serde_json::json;
 use tower_http::trace::TraceLayer;
 use tracing::info;
 
+#[allow(clippy::all, unused)]
 mod ap {
     use activity_vocabulary::Unit;
     use activity_vocabulary_core::*;
@@ -128,9 +128,11 @@ async fn ap_get_user(
         .item
         .ok_or_else(|| json!({"msg": "not found"}))
         .http_error_json(StatusCode::NOT_FOUND)?;
+    #[allow(unused)]
     let user: Account = serde_dynamo::aws_sdk_dynamodb_0_30::from_item(user)
         .map_err(|e| e.to_string())
         .http_error_json(StatusCode::INTERNAL_SERVER_ERROR)?;
+    #[allow(unused)]
     let actor = ap::Person::builder();
     Ok("unimplemented")
 }
