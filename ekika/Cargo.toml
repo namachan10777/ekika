@@ -14,17 +14,13 @@ aws-config = "0.56"
 aws-sdk-dynamodb = "0.30"
 aws-sdk-opensearch = "0.30"
 aws-sdk-s3 = "0.30"
-axum = { workspace = true, features = [
-    "headers",
-    "tracing",
-    "http2",
-    "multipart",
-    "ws",
-] }
+axum = { workspace = true, features = ["tracing", "http2", "multipart", "ws"] }
+axum-extra = { workspace = true, features = ["typed-header"] }
 axum-helper = { version = "0.0.1", path = "../axum-helper" }
 clap = { version = "4", features = ["derive", "env"] }
 futures-util = "0.3"
 handlebars = "5"
+http = { workspace = true }
 maplit = "1"
 metrics = "0.21"
 metrics-exporter-prometheus = "0.14"
@@ -58,7 +54,7 @@ tokio = { version = "1.36", features = [
     "signal",
     "fs",
 ] }
-tower-http = { version = "0.4", features = ["trace"] }
+tower-http = { version = "0.5", features = ["trace"] }
 tracing = { version = "0.1", features = ["valuable"] }
 tracing-subscriber = { version = "0.3", features = [
     "env-filter",

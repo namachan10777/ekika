@@ -6,7 +6,6 @@ use axum_helper::{headers::ProxyInfo, HttpError, ToHttpErrorJson};
 use clap::Parser;
 use ekika::model::account::Account;
 use once_cell::sync::Lazy;
-use reqwest::StatusCode;
 use serde::Serialize;
 use serde_json::json;
 use tower_http::trace::TraceLayer;
@@ -47,7 +46,7 @@ async fn host_meta(proxy_info: ProxyInfo) -> Result<impl IntoResponse, HttpError
             },
         )
         .map_err(|e| json!({"ok": false, "msg": e.to_string()}))
-        .http_error_json(StatusCode::INTERNAL_SERVER_ERROR)?;
+        .http_error_json(http::StatusCode::INTERNAL_SERVER_ERROR)?;
     Ok((
         axum_helper::TypedHeader(axum_helper::headers::ContentType(XRD_XML.clone())),
         txt,
@@ -71,13 +70,13 @@ impl ekika::webfinger::AccountStore for State {
             .send()
             .await
             .map_err(|e| format!("{e:?}"))
-            .http_error_json(StatusCode::INTERNAL_SERVER_ERROR)?;
+            .http_error_json(http::StatusCode::INTERNAL_SERVER_ERROR)?;
         let Some(item) = item.item else {
             return Ok(None);
         };
         let user = serde_dynamo::aws_sdk_dynamodb_0_30::from_item(item)
             .map_err(|e| e.to_string())
-            .http_error_json(StatusCode::INTERNAL_SERVER_ERROR)?;
+            .http_error_json(http::StatusCode::INTERNAL_SERVER_ERROR)?;
         Ok(Some(user))
     }
 }
@@ -123,15 +122,15 @@ async fn ap_get_user(
         .send()
         .await
         .map_err(|e| e.to_string())
-        .http_error_json(StatusCode::INTERNAL_SERVER_ERROR)?;
+        .http_error_json(http::StatusCode::INTERNAL_SERVER_ERROR)?;
     let user = user
         .item
         .ok_or_else(|| json!({"msg": "not found"}))
-        .http_error_json(StatusCode::NOT_FOUND)?;
+        .http_error_json(http::StatusCode::NOT_FOUND)?;
     #[allow(unused)]
     let user: Account = serde_dynamo::aws_sdk_dynamodb_0_30::from_item(user)
         .map_err(|e| e.to_string())
-        .http_error_json(StatusCode::INTERNAL_SERVER_ERROR)?;
+        .http_error_json(http::StatusCode::INTERNAL_SERVER_ERROR)?;
     #[allow(unused)]
     let actor = ap::Person::builder();
     Ok("unimplemented")
@@ -163,8 +162,7 @@ async fn main() -> anyhow::Result<()> {
         .route("/user/:users", routing::get(ap_get_user))
         .with_state(state)
         .layer(TraceLayer::new_for_http());
-    axum::Server::bind(&opts.addr)
-        .serve(router.into_make_service())
-        .await?;
+    let listener = tokio::net::TcpListener::bind(&opts.addr).await?;
+    axum::serve(listener, router.into_make_service()).await?;
     Ok(())
 }

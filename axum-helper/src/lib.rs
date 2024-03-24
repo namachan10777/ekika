@@ -14,7 +14,7 @@ pub mod headers;
 pub trait Header {
     fn name() -> &'static str;
 
-    fn decode<'i, I>(values: &mut I) -> Result<Self, axum::headers::Error>
+    fn decode<'i, I>(values: &mut I) -> Result<Self, axum_extra::headers::Error>
     where
         Self: Sized,
         I: Iterator<Item = &'i axum::http::HeaderValue>;
@@ -25,7 +25,7 @@ pub struct TypedHeader<T>(pub T);
 
 enum TypedHeaderRejectionReason {
     Missing,
-    Error(axum::headers::Error),
+    Error(axum_extra::headers::Error),
 }
 
 pub struct TypedHeaderRejection {

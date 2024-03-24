@@ -4,7 +4,6 @@ use axum::Json;
 use axum_helper::{headers::ProxyInfo, HttpError, ToHttpErrorJson};
 use futures_util::Future;
 use maplit::hashset;
-use reqwest::StatusCode;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use tracing::debug;
@@ -58,7 +57,7 @@ where
     if query.resource.scheme() != "acct" {
         return Err(HttpError::new_json(
             &json!({"ok": false}),
-            StatusCode::BAD_REQUEST,
+            http::StatusCode::BAD_REQUEST,
         ));
     }
     let account = query
@@ -66,7 +65,7 @@ where
         .path()
         .strip_suffix(&format!("@{}", proxy_info.host))
         .ok_or("not_found")
-        .http_error_json(StatusCode::NOT_FOUND)?;
+        .http_error_json(http::StatusCode::NOT_FOUND)?;
     debug!(account = account, "account");
     if state.query(account).await?.is_some() {
         let frontend_profile: url::Url =
@@ -96,7 +95,7 @@ where
     } else {
         Err(HttpError::new_json(
             &json!({"ok": "false"}),
-            StatusCode::NOT_FOUND,
+            http::StatusCode::NOT_FOUND,
         ))
     }
 }

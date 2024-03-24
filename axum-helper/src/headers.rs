@@ -32,18 +32,22 @@ impl Header for XForwardedFor {
         values.extend(std::iter::once(HeaderValue::from_str(&value).unwrap()))
     }
 
-    fn decode<'i, I>(values: &mut I) -> Result<Self, axum::headers::Error>
+    fn decode<'i, I>(values: &mut I) -> Result<Self, axum_extra::headers::Error>
     where
         Self: Sized,
         I: Iterator<Item = &'i axum::http::HeaderValue>,
     {
-        let ips = values.next().ok_or_else(axum::headers::Error::invalid)?;
-        let ips = ips.to_str().map_err(|_| axum::headers::Error::invalid())?;
+        let ips = values
+            .next()
+            .ok_or_else(axum_extra::headers::Error::invalid)?;
+        let ips = ips
+            .to_str()
+            .map_err(|_| axum_extra::headers::Error::invalid())?;
         let ips = ips
             .split(',')
             .map(IpAddr::from_str)
             .collect::<Result<Vec<_>, _>>()
-            .map_err(|_| axum::headers::Error::invalid())?;
+            .map_err(|_| axum_extra::headers::Error::invalid())?;
         Ok(Self(ips))
     }
 }
@@ -55,15 +59,19 @@ impl Header for XForwardedHost {
         "X-Forwarded-Host"
     }
 
-    fn decode<'i, I>(values: &mut I) -> Result<Self, axum::headers::Error>
+    fn decode<'i, I>(values: &mut I) -> Result<Self, axum_extra::headers::Error>
     where
         Self: Sized,
         I: Iterator<Item = &'i axum::http::HeaderValue>,
     {
-        let host = values.next().ok_or_else(axum::headers::Error::invalid)?;
-        let host = host.to_str().map_err(|_| axum::headers::Error::invalid())?;
+        let host = values
+            .next()
+            .ok_or_else(axum_extra::headers::Error::invalid)?;
+        let host = host
+            .to_str()
+            .map_err(|_| axum_extra::headers::Error::invalid())?;
         if !host.is_ascii() {
-            return Err(axum::headers::Error::invalid());
+            return Err(axum_extra::headers::Error::invalid());
         }
         Ok(Self(host.to_string()))
     }
@@ -139,19 +147,21 @@ impl Header for Proto {
         ))
     }
 
-    fn decode<'i, I>(values: &mut I) -> Result<Self, axum::headers::Error>
+    fn decode<'i, I>(values: &mut I) -> Result<Self, axum_extra::headers::Error>
     where
         Self: Sized,
         I: Iterator<Item = &'i axum::http::HeaderValue>,
     {
-        let proto = values.next().ok_or_else(axum::headers::Error::invalid)?;
+        let proto = values
+            .next()
+            .ok_or_else(axum_extra::headers::Error::invalid)?;
         let proto = proto
             .to_str()
-            .map_err(|_| axum::headers::Error::invalid())?;
+            .map_err(|_| axum_extra::headers::Error::invalid())?;
         match proto.trim() {
             "http" => Ok(Self::Http),
             "https" => Ok(Self::Https),
-            _ => Err(axum::headers::Error::invalid()),
+            _ => Err(axum_extra::headers::Error::invalid()),
         }
     }
 }
@@ -169,14 +179,20 @@ impl Header for ContentType {
         ));
     }
 
-    fn decode<'i, I>(values: &mut I) -> Result<Self, axum::headers::Error>
+    fn decode<'i, I>(values: &mut I) -> Result<Self, axum_extra::headers::Error>
     where
         Self: Sized,
         I: Iterator<Item = &'i axum::http::HeaderValue>,
     {
-        let mime = values.next().ok_or_else(axum::headers::Error::invalid)?;
-        let mime = mime.to_str().map_err(|_| axum::headers::Error::invalid())?;
-        let mime = mime.parse().map_err(|_| axum::headers::Error::invalid())?;
+        let mime = values
+            .next()
+            .ok_or_else(axum_extra::headers::Error::invalid)?;
+        let mime = mime
+            .to_str()
+            .map_err(|_| axum_extra::headers::Error::invalid())?;
+        let mime = mime
+            .parse()
+            .map_err(|_| axum_extra::headers::Error::invalid())?;
         Ok(Self(mime))
     }
 }
