@@ -6,18 +6,24 @@ services:
       context: .
     command: --addr 0.0.0.0:8080
     ports:
-      - "8080:8080"
+      - "10000:8080"
     environment:
       RUST_LOG: "debug"
       AWS_ACCESS_KEY_ID: "test"
       AWS_SECRET_ACCESS_KEY: "test"
+  ekika-ui:
+    build:
+      dockerfile: ./ekika-ui/Dockerfile
+      context: .
+    ports:
+      - "8080:80"
   dynamodb:
     image: "amazon/dynamodb-local:latest"
     command: "-jar DynamoDBLocal.jar -dbPath /home/dynamodblocal/data"
     working_dir: /home/dynamodblocal
     user: root
     ports:
-      - "8000:8000"
+      - "10010:8000"
     volumes:
       - type: volume
         source: dynamodb

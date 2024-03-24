@@ -13,6 +13,7 @@ COPY . .
 RUN cargo build --release
 
 FROM debian:bookworm-slim
+RUN apt-get update && apt-get install -y ca-certificates
 COPY --from=builder /work/target/release/ekika /usr/local/bin/ekika
 ENV RUST_LOG=info
 ENV ADDR=0.0.0.0:8080

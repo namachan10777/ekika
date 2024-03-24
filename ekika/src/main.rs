@@ -164,6 +164,8 @@ async fn main() -> anyhow::Result<()> {
         .with_state(state)
         .layer(TraceLayer::new_for_http());
     let listener = tokio::net::TcpListener::bind(&opts.addr).await?;
-    axum::serve(listener, router.into_make_service()).await?;
+    axum::serve(listener, router.into_make_service())
+        .with_graceful_shutdown(async { ekika::util::shutdown().await.unwrap() })
+        .await?;
     Ok(())
 }
