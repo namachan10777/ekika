@@ -71,4 +71,4 @@ valuable = { version = "0.1", features = ["valuable-derive", "derive"] }
 
 [build-dependencies]
 activity-vocabulary-derive = { version = "0.0.2" }
-serde_yaml = "0.9.25"
+serde_yaml = "0.9.33"
