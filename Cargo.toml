@@ -5,7 +5,7 @@ package.version = "0.0.1"
 resolver = "2"
 
 [workspace.dependencies]
-axum = "0.6"
+axum = "0.7"
 async-trait = "0.1"
 http = "0.2"
 mime = "0.3"
