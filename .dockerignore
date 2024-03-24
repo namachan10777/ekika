@@ -1,0 +1,6 @@
+target
+ekika-ui/node_modules
+Dockerfile
+.dockerignore
+.git
+.gitignore

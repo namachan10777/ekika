@@ -6,8 +6,8 @@ edition.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-activity-vocabulary = "0.0.4"
-activity-vocabulary-core = "0.0.4"
+activity-vocabulary = "0.0.5"
+activity-vocabulary-core = "0.0.5"
 anyhow = { version = "1", features = ["backtrace"] }
 async-trait.workspace = true
 aws-config = "1.1"
@@ -23,7 +23,9 @@ handlebars = "5"
 http = { workspace = true }
 maplit = "1"
 metrics = "0.22"
-metrics-exporter-prometheus = "0.14"
+metrics-exporter-prometheus = { version = "0.14", default-features = false, features = [
+    "http-listener",
+] }
 mime.workspace = true
 moka = { version = "0.12", features = ["future"] }
 once_cell = "1.19"
@@ -66,5 +68,5 @@ url = { version = "2.5", features = ["serde"] }
 valuable = { version = "0.1", features = ["valuable-derive", "derive"] }
 
 [build-dependencies]
-activity-vocabulary-derive = { version = "0.0.4" }
+activity-vocabulary-derive = { version = "0.0.5" }
 serde_yaml = "0.9.33"

@@ -1,5 +1,16 @@
-version: '3.8'
+version: "3.8"
 services:
+  ekika:
+    build:
+      dockerfile: ./ekika/Dockerfile
+      context: .
+    command: --addr 0.0.0.0:8080
+    ports:
+      - "8080:8080"
+    environment:
+      RUST_LOG: "debug"
+      AWS_ACCESS_KEY_ID: "test"
+      AWS_SECRET_ACCESS_KEY: "test"
   dynamodb:
     image: "amazon/dynamodb-local:latest"
     command: "-jar DynamoDBLocal.jar -dbPath /home/dynamodblocal/data"
