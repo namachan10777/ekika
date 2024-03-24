@@ -66,5 +66,5 @@ url = { version = "2.5", features = ["serde"] }
 valuable = { version = "0.1", features = ["valuable-derive", "derive"] }
 
 [build-dependencies]
-activity-vocabulary-derive = { version = "0.0.2" }
+activity-vocabulary-derive = { version = "0.0.4" }
 serde_yaml = "0.9.33"
