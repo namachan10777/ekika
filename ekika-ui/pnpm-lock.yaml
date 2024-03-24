@@ -33,8 +33,8 @@ devDependencies:
     specifier: 8.45.0
     version: 8.45.0
   eslint-plugin-qwik:
-    specifier: ^1.2.12
-    version: 1.2.12(eslint@8.45.0)
+    specifier: ^1.5.1
+    version: 1.5.1(eslint@8.45.0)
   prettier:
     specifier: 3.0.0
     version: 3.0.0
@@ -3205,11 +3205,11 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /eslint-plugin-qwik@1.2.12(eslint@8.45.0):
-    resolution: {integrity: sha512-BdwXm3UcBlufWOvOFJSoqxImHa9LcM3k44/oTshcuNa4+iOuiR8FFb/pFn7kk5BcugH7gUOsOyhQlvpKauOqXw==}
+  /eslint-plugin-qwik@1.5.1(eslint@8.45.0):
+    resolution: {integrity: sha512-FC6rDPdf9nExjCHzFl1YMir23xeibxoooc7KuF3KCaY0A79e/+dWaFn5smQK0dMncIAJPL6No4oKkiMlfjytGQ==}
     engines: {node: '>=16.8.0 <18.0.0 || >=18.11'}
     peerDependencies:
-      eslint: ^8.45.0
+      eslint: ^8.57.0
     dependencies:
       eslint: 8.45.0
       jsx-ast-utils: 3.3.5
