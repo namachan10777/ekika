@@ -10,10 +10,10 @@ activity-vocabulary = "0.0.4"
 activity-vocabulary-core = "0.0.4"
 anyhow = { version = "1", features = ["backtrace"] }
 async-trait.workspace = true
-aws-config = "0.56"
-aws-sdk-dynamodb = "0.30"
-aws-sdk-opensearch = "0.30"
-aws-sdk-s3 = "0.30"
+aws-config = "1.1"
+aws-sdk-dynamodb = "1.19"
+aws-sdk-opensearch = "1.21"
+aws-sdk-s3 = "1.20"
 axum = { workspace = true, features = ["tracing", "http2", "multipart", "ws"] }
 axum-extra = { workspace = true, features = ["typed-header"] }
 axum-helper = { version = "0.0.1", path = "../axum-helper" }
@@ -43,7 +43,7 @@ sentry = { version = "0.32", default-features = false, features = [
 sentry-tracing = { version = "0.32", features = ["backtrace"] }
 serde = { workspace = true, features = ["derive"] }
 serde-value = "0.7.0"
-serde_dynamo = { version = "4", features = ["aws-sdk-dynamodb+0_30"] }
+serde_dynamo = { version = "4", features = ["aws-sdk-dynamodb+1"] }
 serde_json.workspace = true
 thiserror = "1"
 tokio = { version = "1.36", features = [

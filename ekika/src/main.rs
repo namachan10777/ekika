@@ -1,5 +1,6 @@
 use std::{net::SocketAddr, sync::Arc};
 
+use aws_config::BehaviorVersion;
 use aws_sdk_dynamodb::types::AttributeValue;
 use axum::{extract, response::IntoResponse, routing};
 use axum_helper::{headers::ProxyInfo, HttpError, ToHttpErrorJson};
@@ -74,7 +75,7 @@ impl ekika::webfinger::AccountStore for State {
         let Some(item) = item.item else {
             return Ok(None);
         };
-        let user = serde_dynamo::aws_sdk_dynamodb_0_30::from_item(item)
+        let user = serde_dynamo::aws_sdk_dynamodb_1::from_item(item)
             .map_err(|e| e.to_string())
             .http_error_json(http::StatusCode::INTERNAL_SERVER_ERROR)?;
         Ok(Some(user))
@@ -128,7 +129,7 @@ async fn ap_get_user(
         .ok_or_else(|| json!({"msg": "not found"}))
         .http_error_json(http::StatusCode::NOT_FOUND)?;
     #[allow(unused)]
-    let user: Account = serde_dynamo::aws_sdk_dynamodb_0_30::from_item(user)
+    let user: Account = serde_dynamo::aws_sdk_dynamodb_1::from_item(user)
         .map_err(|e| e.to_string())
         .http_error_json(http::StatusCode::INTERNAL_SERVER_ERROR)?;
     #[allow(unused)]
@@ -142,7 +143,7 @@ async fn main() -> anyhow::Result<()> {
 
     init_logger(opts.json_log);
 
-    let sdk_config = aws_config::load_from_env().await;
+    let sdk_config = aws_config::load_defaults(BehaviorVersion::latest()).await;
     let ddb_config = aws_sdk_dynamodb::config::Builder::from(&sdk_config)
         .endpoint_url("http://localhost:8000")
         .build();
