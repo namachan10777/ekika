@@ -6,6 +6,8 @@ edition.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+activity-vocabulary = "0.0.2"
+activity-vocabulary-core = "0.0.2"
 anyhow = { version = "1", features = ["backtrace"] }
 async-trait.workspace = true
 aws-config = "0.56"
@@ -44,6 +46,7 @@ sentry = { version = "0.31", default-features = false, features = [
 ] }
 sentry-tracing = { version = "0.31", features = ["backtrace"] }
 serde = { workspace = true, features = ["derive"] }
+serde-value = "0.7.0"
 serde_dynamo = { version = "4", features = ["aws-sdk-dynamodb+0_30"] }
 serde_json.workspace = true
 thiserror = "1"
@@ -62,5 +65,10 @@ tracing-subscriber = { version = "0.3", features = [
     "valuable",
     "json",
 ] }
+typed-builder = "0.16.2"
 url = { version = "2.4", features = ["serde"] }
 valuable = { version = "0.1", features = ["valuable-derive", "derive"] }
+
+[build-dependencies]
+activity-vocabulary-derive = { version = "0.0.2" }
+serde_yaml = "0.9.25"

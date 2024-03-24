@@ -251,7 +251,7 @@ impl<S> FromRequestParts<S> for ProxyInfo {
 
         let host = String::from_utf8_lossy(parts.headers.get("Host").unwrap().as_bytes());
 
-        let proto = Cow::Borrowed("proto");
+        let proto = Cow::Borrowed("http");
 
         let proto_proxied = forwarded_proto.is_some() || x_forwarded_proto.is_some();
         let host_proxied = forwarded_host.is_some() || x_forwarded_host.is_some();

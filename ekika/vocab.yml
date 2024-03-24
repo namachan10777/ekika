@@ -1,0 +1,954 @@
+Object:
+  uri: https://www.w3.org/ns/activitystreams#Object
+  extends: []
+  subtype_name: ObjectSubtypes
+  doc: |
+    Describes an object of any kind.
+    The Object type serves as the base type for most of the other kinds of objects defined in the Activity Vocabulary,
+    including other Core types such as [Activity], [IntransitiveActivity], [Collection] and [OrderedCollection].
+
+  properties:
+    object_type: !Simple
+      type: String
+      tag: type
+      uri: "@type"
+      doc: Kind of [ObjectSubtypes]
+
+    id: !Simple
+      type: url::Url
+      uri: "@id"
+      doc: Id of [Object]
+      kind: !Functional
+
+    attachment: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#attributedTo
+      doc: |
+        Identifies a resource attached or related to an object that potentially requires special handling.
+        The intent is to provide a model that is at least semantically similar to attachments in email.
+
+    attributed_to: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      tag: attributedTo
+      uri: https://www.w3.org/ns/activitystreams#attributedTo
+      doc: |
+        Identifies one or more entities to which this object is attributed.
+        The attributed entities might not be Actors. For instance, an object might be attributed to the completion of another activity.
+
+    audience: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#audience
+      doc: |
+        Identifies one or more entities that represent the total population of entities
+        for which the object can considered to be relevant.
+
+    content: !LangContainer
+      type: String
+      uri: https://www.w3.org/ns/activitystreams#content
+      container_tag: contentMap
+      doc: |
+        The content or textual representation of the Object encoded as a JSON string.
+        By default, the value of content is HTML.
+        The [Object::media_type] property
+        can be used in the object to indicate a different content type.
+        The content may be expressed using multiple language-tagged values.
+
+    context: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#context
+      doc: |
+        Identifies the context within which the object exists or an activity was performed.
+        The notion of "context" used is intentionally vague.
+        The intended function is to serve as a means of grouping objects and activities that share a common originating context or purpose.
+        An example could be all activities relating to a common project or event.
+
+    name: !LangContainer
+      type: String
+      uri: https://www.w3.org/ns/activitystreams#name
+      container_tag: nameMap
+      doc: |
+        A simple, human-readable, plain-text name for the object.
+        HTML markup **must not** be included. The name may be expressed using multiple language-tagged values.
+
+    end_time: !Simple
+      type: xsd::DateTime
+      tag: endTime
+      uri: https://www.w3.org/ns/activitystreams#endTime
+      kind: !Functional
+      doc: |
+        The date and time describing the actual or expected ending time of the object.
+        When used with an [Activity] object,
+        for instance, the [Activity::end_time] property specifies the moment the activity concluded or is expected to conclude.
+
+    generator: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#generator
+      doc: |
+        Identifies the entity (e.g. an application) that generated the object.
+
+    published: !Simple
+      type: xsd::DateTime
+      uri: https://www.w3.org/ns/activitystreams#published
+      kind: !Functional
+      doc: The date and time at which the object was published
+
+    icon: !Simple
+      type: Or<LinkSubtypes, Remotable<ImageSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#icon
+      doc: |
+        Indicates an entity that describes an icon for this object.
+        The image should have an aspect ratio of one (horizontal) to one (vertical) and
+        should be suitable for presentation at a small size.
+
+    image: !Simple
+      type: Or<LinkSubtypes, Remotable<ImageSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#image
+      doc: |
+        Indicates an entity that describes an image for this object.
+        Unlike the icon property, there are no aspect ratio or display size limitations assumed.
+
+    in_reply_to: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      tag: inReplyTo
+      uri: https://www.w3.org/ns/activitystreams#inReplyTo
+      doc: |
+        Indicates one or more entities for which this object is considered a response.
+
+    location: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#location
+      doc: |
+        Indicates one or more physical or logical locations associated with the object.
+
+    preview: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#preview
+      doc: |
+        Identifies an entity that provides a preview of this object.
+
+    replies: !Simple
+      type: Remotable<CollectionSubtypes>
+      uri: https://www.w3.org/ns/activitystreams#replies
+      doc: |
+        Identifies a [CollectionSubtypes] containing objects considered to be responses to this object.
+      functional: true
+
+    start_time: !Simple
+      type: xsd::DateTime
+      tag: startTime
+      uri: https://www.w3.org/ns/activitystreams#startTime
+      kind: !Functional
+      doc: |
+        The date and time describing the actual or expected starting time of the object.
+        When used with an [Activity] object, for instance,
+        the [Activity::start_time] property specifies the moment the activity began or is scheduled to begin.
+
+    summary: !LangContainer
+      type: String
+      uri: https://www.w3.org/ns/activitystreams#summary
+      container_tag: summaryMap
+      doc: |
+        A natural language summarization of the object encoded as HTML.
+        Multiple language tagged summaries **may** be provided.
+
+    tag: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#tag
+      doc: |
+        One or more "tags" that have been associated with an objects.
+        A tag can be any kind of Object.
+        The key difference between [Object::attachment] and [Object::tag] is that the former implies association by inclusion,
+        while the latter implies associated by reference.
+
+    updated: !Simple
+      type: xsd::DateTime
+      uri: https://www.w3.org/ns/activitystreams#updated
+      kind: !Functional
+      doc: |
+        The date and time at which the object was updated
+
+    url: !Simple
+      type: Or<url::Url, LinkSubtypes>
+      uri: https://www.w3.org/ns/activitystreams#url
+      doc: |
+        Identifies one or more links to representations of the object
+
+    to: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#to
+      doc: |
+        Identifies an entity considered to be part of the public primary audience of an Object
+
+    bto: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#bto
+      doc: |
+        Identifies an Object that is part of the private primary audience of this Object.
+
+    cc: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#cc
+      doc: |
+        Identifies an Object that is part of the public secondary audience of this Object.
+
+    bcc: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#bcc
+      doc: |
+        Identifies one or more Objects that are part of the private secondary audience of this Object.
+
+    media_type: !Simple
+      type: String
+      tag: mediaType
+      uri: https://www.w3.org/ns/activitystreams#mediaType
+      kind: !Functional
+      doc: |
+        Identifies the MIME media type of the value of the [Object::content] property.
+        If not specified, the [Object::content] property is assumed to contain `text/html` content.
+
+    duration: !Simple
+      type: xsd::Duration
+      kind: !Functional
+      uri: https://www.w3.org/ns/activitystreams#duration
+      doc: |
+        When the object describes a time-bound resource,
+        such as an audio or video,
+        a meeting, etc, the [Object::duration] property indicates the object's approximate duration.
+        The value **must** be expressed as an [xsd::Duration] as defined by [xmlschema11-2](https://www.w3.org/TR/xmlschema11-2/),
+        section 3.3.6 (e.g. a period of 5 seconds is represented as `PT5S`).
+Link:
+  extends: []
+  uri: https://www.w3.org/ns/activitystreams#Link
+  subtype_name: LinkSubtypes
+  as_object_id: false
+  doc: |
+    A Link is an indirect, qualified reference to a resource identified by a URL.
+    The fundamental model for links is established by [RFC5988](https://datatracker.ietf.org/doc/html/rfc5988).
+    Many of the properties defined by the Activity Vocabulary allow values that are either instances of [ObjectSubtypes] or [LinkSubtypes].
+    When a [Link] is used,
+    it establishes a [qualified relation](https://patterns.dataincubator.org/book/qualified-relation.html)
+    connecting the subject (the containing object) to the resource identified by the [Link::href].
+    Properties of the [Link] are properties of the reference as opposed to properties of the resource.
+  properties:
+    link_type: !Simple
+      type: String
+      tag: type
+      uri: "@type"
+      doc: Kind of [LinkSubtypes]
+
+    href: !Simple
+      type: url::Url
+      uri: https://www.w3.org/ns/activitystreams#href
+      kind: !Required
+      doc: |
+        The target resource pointed to by a [Link].
+
+    rel: !Simple
+      type: String
+      uri: https://www.w3.org/ns/activitystreams#rel
+      doc: |
+        A link relation associated with a [Link].
+        The value must conform to both the [HTML5](https://datatracker.ietf.org/doc/html/rfc2119)
+        and [RFC5988](https://datatracker.ietf.org/doc/html/rfc5988) `link relation` definitions.
+
+    summary: !LangContainer
+      type: String
+      uri: https://www.w3.org/ns/activitystreams#summary
+      container_tag: summaryMap
+      doc: |
+        A natural language summarization of the object encoded as HTML.
+        Multiple language tagged summaries **may** be provided.
+
+    media_type: !Simple
+      type: String
+      tag: mediaType
+      uri: https://www.w3.org/ns/activitystreams#mediaType
+      kind: !Functional
+      doc: |
+        Identifies the MIME media type of the referenced resource.
+
+    name: !LangContainer
+      type: String
+      uri: https://www.w3.org/ns/activitystreams#name
+      container_tag: nameMap
+      doc: |
+        A simple, human-readable, plain-text name for the object.
+        HTML markup **must not** be included. The name may be expressed using multiple language-tagged values.
+
+    hreflang: !Simple
+      type: String
+      uri: https://www.w3.org/ns/activitystreams#hreflang
+      kind: !Functional
+      doc: |
+        Hints as to the language used by the target resource.
+        Value must be a [BCP47](https://www.rfc-editor.org/info/bcp47) Language-Tag.
+
+    height: !Simple
+      type: u64
+      uri: https://www.w3.org/ns/activitystreams#height
+      kind: !Functional
+      doc: |
+        On a [Link], specifies a hint as to the rendering height in device-independent pixels of the linked resource.
+
+    width: !Simple
+      type: u64
+      uri: https://www.w3.org/ns/activitystreams#width
+      kind: !Functional
+      doc: |
+        On a [Link], specifies a hint as to the rendering width in device-independent pixels of the linked resource.
+
+    preview: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#preview
+      doc: |
+        Identifies an entity that provides a preview of this object.
+
+Activity:
+  extends: [Object]
+  uri: https://www.w3.org/ns/activitystreams#Activity
+  subtype_name: ActivitySubtypes
+  doc: |
+    An Activity is a subtype of [Object] that describes some form of action that may happen,
+    is currently happening, or has already happened.
+    The [Activity] type itself serves as an abstract base type for all types of activities.
+    It is important to note that the [Activity] type itself does not carry any specific semantics about the kind of action being taken.
+  properties:
+    actor: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#actor
+      doc: |
+        Describes one or more entities that either performed or are expected to perform the activity.
+        Any single activity can have multiple [Activity::actor]s. The [Activity::actor] may be specified using an indirect [Link].
+
+    object: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#object
+      doc: |
+        Describes the direct object of the activity.
+        For instance, in the activity `John added a movie to his wishlist`, the object of the activity is the movie added.
+
+    target: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#target
+      doc: |
+        Describes the indirect object, or target, of the activity.
+        The precise meaning of the target is largely dependent on the type of action being described but will often be the object of the English preposition "to".
+        For instance, in the activity `John added a movie to his wishlist`, the target of the activity is John's wishlist.
+        An activity can have more than one target.
+
+    result: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#result
+      doc: |
+        Describes the result of the activity. For instance,
+        if a particular action results in the creation of a new resource,
+        the result property can be used to describe that new resource.
+
+    origin: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#origin
+      doc: |
+        Describes an indirect object of the activity from which the activity is directed.
+        The precise meaning of the origin is the object of the English preposition "from". For instance,
+        in the activity "John moved an item to List B from List A", the origin of the activity is "List A".
+
+    instrument: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#instrument
+      doc: |
+        Identifies one or more objects used (or to be used) in the completion of an [Activity].
+
+IntransitiveActivity:
+  uri: https://www.w3.org/ns/activitystreams#IntransitiveActivity
+  extends: [Activity]
+  subtype_name: IntransitiveActivitySubtypes
+  except_properties: [object]
+  doc: |
+    Instances of [IntransitiveActivity] are a subtype of [Activity] representing intransitive actions.
+    The object property is therefore inappropriate for these activities.
+
+Collection:
+  uri: https://www.w3.org/ns/activitystreams#Collection
+  subtype_name: CollectionSubtypes
+  extends: [Object]
+  doc: |
+    A [Collection] is a subtype of [ObjectSubtypes] that represents ordered or unordered sets of [ObjectSubtypes] *or* [LinkSubtypes] instances.
+    Refer to the [Activity Streams 2.0 Core specification](https://www.w3.org/TR/activitystreams-core/#collection)
+    for a complete description of the [CollectionSubtypes] type.
+
+  properties:
+    total_items: !Simple
+      type: usize
+      uri: https://www.w3.org/ns/activitystreams#totalItems
+      tag: totalItems
+      doc: |
+        A non-negative integer specifying the total number of objects contained by the logical view of the collection.
+        This number might not reflect the actual number of items serialized within the [Collection] object instance.
+      kind: !Functional
+
+    items: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#items
+      aka:
+        - orderedItems
+      doc: |
+        Identifies the items contained in a collection. The items might be ordered or unordered.
+
+    current: !Simple
+      type: Box<Or<LinkSubtypes, Remotable<CollectionPageSubtypes>>>
+      uri: https://www.w3.org/ns/activitystreams#current
+      kind: !Functional
+      doc: |
+        In a paged [Collection], indicates the page that contains the most recently updated member items.
+
+    first: !Simple
+      type: Box<Or<LinkSubtypes, Remotable<CollectionPageSubtypes>>>
+      uri: https://www.w3.org/ns/activitystreams#first
+      kind: !Functional
+      doc: |
+        In a paged [Collection], indicates the furthest preceeding page of items in the collection.
+
+    last: !Simple
+      type: Box<Or<LinkSubtypes, Remotable<CollectionPageSubtypes>>>
+      uri: https://www.w3.org/ns/activitystreams#last
+      kind: !Functional
+      doc: |
+        In a paged [Collection], indicates the furthest proceeding page of the collection.
+
+OrderedCollection:
+  uri: https://www.w3.org/ns/activitystreams#OrderedCollection
+  subtype_name: OrderedCollectionSubtypes
+  extends: [Collection]
+  doc: |
+    A subtype of [Collection] in which members of the logical collection are assumed to always be strictly ordered.
+  preferred_property_name:
+    items: !Simple "orderedItems"
+CollectionPage:
+  uri: https://www.w3.org/ns/activitystreams#CollectionPage
+  subtype_name: CollectionPageSubtypes
+  extends: [Collection]
+  doc: |
+    Used to represent distinct subsets of items from a [Collection].
+    Refer to the [Activity Streams 2.0 Core](https://www.w3.org/TR/activitystreams-core/#dfn-collectionpage) for a complete description of the [CollectionPage] object.
+  properties:
+    part_of: !Simple
+      tag: partOf
+      uri: https://www.w3.org/ns/activitystreams#partOf
+      type: Box<Or<Remotable<CollectionSubtypes>, LinkSubtypes>>
+      kind: !Functional
+      doc: |
+        Identifies the [CollectionSubtypes] to which a [CollectionPage] objects items belong.
+
+    next: !Simple
+      type: Box<Or<LinkSubtypes, Remotable<CollectionPageSubtypes>>>
+      uri: https://www.w3.org/ns/activitystreams#next
+      kind: !Functional
+      doc: |
+        In a paged [CollectionSubtypes], indicates the next page of items.
+
+    prev: !Simple
+      type: Box<Or<LinkSubtypes, Remotable<CollectionPageSubtypes>>>
+      uri: https://www.w3.org/ns/activitystreams#prev
+      kind: !Functional
+      doc: |
+        In a paged [CollectionSubtypes], indicates the prev page of items.
+
+OrderedCollectionPage:
+  uri: https://www.w3.org/ns/activitystreams#OrderedCollectionPage
+  subtype_name: OrderedCollectionPageSubtypes
+  extends: [OrderedCollection, CollectionPage]
+  doc: |
+    Used to represent ordered subsets of items from an [OrderedCollectionSubtypes].
+    Refer to the [Activity Streams 2.0 Core](https://www.w3.org/TR/activitystreams-core/#dfn-orderedcollectionpage)
+    for a complete description of the [OrderedCollectionPage] object.
+  properties:
+    start_index: !Simple
+      uri: https://www.w3.org/ns/activitystreams#startIndex
+      type: usize
+      tag: startIndex
+      kind: !Functional
+      doc: |
+        A non-negative integer value identifying the relative position within the logical view of a strictly ordered collection.
+  preferred_property_name:
+    items: !Simple "orderedItems"
+
+Accept:
+  uri: https://www.w3.org/ns/activitystreams#Accept
+  subtype_name: AcceptSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Accept::actor] accepts the [Accept::object].
+    The [Accept::target] property can be used in certain circumstances to indicate the context into which the [Accept::object] has been accepted.
+
+TentativeAccept:
+  uri: https://www.w3.org/ns/activitystreams#TentativeAccept
+  subtype_name: TentativeAcceptSubtypes
+  extends: [Accept]
+  doc: |
+    A specialization of [Accept] indicating that the acceptance is tentative.
+
+Add:
+  uri: https://www.w3.org/ns/activitystreams#Add
+  subtype_name: AddSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Add::actor] has added the [Add::object] to the [Add::target].
+    If the [Add::target] property is not explicitly specified,
+    the [Add::target] would need to be determined implicitly by context.
+    The [Add::origin] can be used to identify the context from which the [Add::origin] originated.
+
+Arrive:
+  uri: https://www.w3.org/ns/activitystreams#Arrive
+  subtype_name: ArriveSubtypes
+  extends: [IntransitiveActivity]
+  doc: |
+    An [IntransitiveActivity] that indicates that the [Arrive::actor] has arrived at the [Arrive::location].
+    The [Arrive::origin] can be used to identify the context from which the actor originated.
+    The [Arrive::target] typically has no defined meaning.
+
+Create:
+  uri: https://www.w3.org/ns/activitystreams#Create
+  subtype_name: CreateSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Create::actor] has created the [Create::object].
+
+Delete:
+  uri: https://www.w3.org/ns/activitystreams#Delete
+  subtype_name: DeleteSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Delete::actor] has deleted the [Delete::object].
+    If specified, the [Delete::origin] indicates the context from which the [Delete::object] was deleted.
+
+Follow:
+  uri: https://www.w3.org/ns/activitystreams#Follow
+  subtype_name: FollowSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Follow::actor] is "following" the object.
+    Following is defined in the sense typically used
+    within Social systems in which the actor is interested in any activity performed by or on the [Follow::object].
+    The [Follow::target] and [Follow::origin] typically have no defined meaning.
+
+Ignore:
+  uri: https://www.w3.org/ns/activitystreams#Ignore
+  subtype_name: IgnoreSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the actor is ignoring the [Ignore::object].
+    The [Ignore::target] and [Ignore::origin] typically have no defined meaning.
+
+Join:
+  uri: https://www.w3.org/ns/activitystreams#Join
+  subtype_name: JoinSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the actor has joined the [Join::object].
+    The [Join::target] and [Join::origin] typically have no defined meaning.
+
+Leave:
+  uri: https://www.w3.org/ns/activitystreams#Leave
+  subtype_name: LeaveSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Leave::actor] has left the [Leave::object].
+    The [Leave::target] and [Leave::origin] typically have no meaning.
+
+Like:
+  uri: https://www.w3.org/ns/activitystreams#Like
+  subtype_name: LikeSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Like::actor] likes, recommends or endorses the [Like::object].
+    The [Like::target] and [Like::origin] typically have no defined meaning.
+
+Offer:
+  uri: https://www.w3.org/ns/activitystreams#Offer
+  subtype_name: OfferSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the actor likes, recommends or endorses the [Offer::object].
+    The [Offer::target] and [Offer::origin] typically have no defined meaning.
+
+Invite:
+  uri: https://www.w3.org/ns/activitystreams#Invite
+  subtype_name: InviteSubtypes
+  extends: [Offer]
+  doc: |
+    A specialization of [Offer] in which the [Invite::actor] is extending an invitation for the [Invite::object] to the target.
+
+Reject:
+  uri: https://www.w3.org/ns/activitystreams#Reject
+  subtype_name: RejectSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Reject::actor] is rejecting the [Reject::object].
+    The target and [Reject::origin] typically have no defined meaning.
+
+TentativeReject:
+  uri: https://www.w3.org/ns/activitystreams#TentativeReject
+  subtype_name: TentativeRejectSubtypes
+  extends: [Reject]
+  doc: |
+    A specialization of [Reject] in which the rejection is considered tentative.
+
+Remove:
+  uri: https://www.w3.org/ns/activitystreams#Remove
+  subtype_name: RemoveSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Remove::actor] is removing the [Remove::object].
+    If specified, the [Remove::origin] indicates the context from which the [Remove::object] is being removed.
+
+Undo:
+  uri: https://www.w3.org/ns/activitystreams#Undo
+  subtype_name: UndoSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Undo::actor] is undoing the [Undo::object].
+    In most cases, the [Undo::object] will be an [Activity] describing some previously performed action
+    (for instance, a person may have previously "liked" an article but, for whatever reason, might choose to undo that like at some later point in time).
+
+    The [Undo::target] and [Undo::origin] typically have no defined meaning.
+
+Update:
+  uri: https://www.w3.org/ns/activitystreams#Update
+  subtype_name: UpdateSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Update::actor] has updated the [Update::object].
+    Note, however, that this vocabulary does not define a mechanism for describing the actual set of modifications made to [Update::object].
+
+View:
+  uri: https://www.w3.org/ns/activitystreams#View
+  subtype_name: ViewSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [View::actor] has viewed the [View::object].
+
+Listen:
+  uri: https://www.w3.org/ns/activitystreams#Listen
+  subtype_name: ListenSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Listen::actor] has listened to the [Listen::object].
+
+Read:
+  uri: https://www.w3.org/ns/activitystreams#Read
+  subtype_name: ReadSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Read::actor] has read the [Read::object].
+
+Move:
+  uri: https://www.w3.org/ns/activitystreams#Move
+  subtype_name: MoveSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Move::actor] has moved [Move::object] from [Move::origin] to [Move::target].
+    If the [Move::origin] or [Move::target] are not specified,
+    either can be determined by context.
+
+Travel:
+  uri: https://www.w3.org/ns/activitystreams#Travel
+  subtype_name: TravelSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Travel::actor] is traveling to [Travel::target] from [Travel::origin].
+    [Travel] is an IntransitiveObject whose actor specifies the direct [Travel::object].
+    If the [Travel::target] or [Travel::origin] are not specified, either can be determined by context.
+
+Announce:
+  uri: https://www.w3.org/ns/activitystreams#Announce
+  subtype_name: AnnounceSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Announce::actor] is calling the [Announce::target]'s attention the [Announce::object].
+    The [Announce::origin] typically has no defined meaning.
+Block:
+  uri: https://www.w3.org/ns/activitystreams#Block
+  subtype_name: BlockSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Block::actor] is blocking the [Block::object].
+    Blocking is a stronger form of [Ignore].
+    The typical use is to support social systems that allow one user to block activities or content of other users.
+    The [Block::target] and [Block::origin] typically have no defined meaning.
+
+Flag:
+  uri: https://www.w3.org/ns/activitystreams#Flag
+  subtype_name: FlagSubtypes
+  extends: [Activity]
+  doc: |
+    Indicates that the [Flag::actor] is "flagging" the [Flag::object].
+    Flagging is defined in the sense common to many social platforms as reporting content as being inappropriate for any number of reasons.
+
+Dislike:
+  uri: https://www.w3.org/ns/activitystreams#Dislike
+  extends: [Activity]
+  subtype_name: DislikeSubtypes
+  doc: |
+    Indicates that the [Dislike::actor] dislikes the [Dislike::object].
+
+Question:
+  uri: https://www.w3.org/ns/activitystreams#Question
+  subtype_name: QuestionSubtypes
+  extends: [IntransitiveActivity]
+  doc: |
+    Represents a question being asked.
+    [Question] objects are an extension of [IntransitiveActivity].
+    That is, the [Question] object is an [Activity],
+    but the direct object is the question itself and therefore it would not contain an [Activity::object] property.
+    Either of the [Question::any_of] and [Question::one_of] properties may be used to express possible answers,
+    but a [Question] object must not have both properties.
+  properties:
+    one_of: !Simple
+      uri: https://www.w3.org/ns/activitystreams#oneOf
+      tag: oneOf
+      type: Or<Remotable<Object>, Link>
+      doc: |
+        Identifies an exclusive option for a [Question].
+        Use of [Question::one_of] implies that the [Question] can have only a single answer.
+        To indicate that a [Question] can have multiple answers, use [Question::any_of].
+
+    any_of: !Simple
+      uri: https://www.w3.org/ns/activitystreams#anyOf
+      type: Or<Remotable<Object>, Like>
+      tag: anyOf
+      doc: |
+        Identifies an exclusive option for a [Question].
+        Use of [Question::one_of] implies that the [Question] can have only a single answer.
+        To indicate that a [Question] can have multiple answers, use [Question::one_of].
+
+    closed: !Simple
+      uri: https://www.w3.org/ns/activitystreams#closed
+      type: Or<Or<Remotable<Object>, Link>, Or<xsd::DateTime, bool>>
+      doc: Indicates that a question has been closed, and answers are no longer accepted.
+
+Application:
+  uri: https://www.w3.org/ns/activitystreams#Application
+  subtype_name: ApplicationSubtypes
+  extends: [Object]
+  doc: Describes a software application.
+
+Group:
+  uri: https://www.w3.org/ns/activitystreams#Group
+  subtype_name: GroupSubtypes
+  extends: [Object]
+  doc: Represents a formal or informal collective of Actors.
+
+Organization:
+  uri: https://www.w3.org/ns/activitystreams#Organization
+  subtype_name: OrganizationSubtypes
+  extends: [Object]
+  doc: Represents an organization.
+
+Person:
+  uri: https://www.w3.org/ns/activitystreams#Person
+  subtype_name: PersonSubtypes
+  extends: [Object]
+  doc: Represents an individual person.
+  properties:
+    inbox: !Simple
+      type: url::Url
+      uri: https://www.w3.org/ns/activitystreams#inbox
+      doc: inbox
+    outbox: !Simple
+      type: Remotable<OrderedCollection>
+      uri: https://www.w3.org/ns/activitystreams#outbox
+      doc: outbox
+    following: !Simple
+      type: Remotable<CollectionSubtypes>
+      uri: https://www.w3.org/ns/activitystreams#following
+      doc: following
+    followers: !Simple
+      type: Remotable<CollectionSubtypes>
+      uri: https://www.w3.org/ns/activitystreams#followers
+      doc: followers
+    liked: !Simple
+      type: Remotable<CollectionSubtypes>
+      uri: https://www.w3.org/ns/activitystreams#liked
+      doc: liked
+
+Service:
+  uri: https://www.w3.org/ns/activitystreams#Service
+  subtype_name: ServiceSubtypes
+  extends: [Object]
+  doc: Represents a service of any kind.
+
+Relationship:
+  uri: https://www.w3.org/ns/activitystreams#Relationship
+  subtype_name: RelationshipSubtypes
+  extends: [Object]
+  doc: |
+    Describes a relationship between two individuals.
+    The [Relationship::subject] and [Relationship::object] properties are used to identify the connected individuals.
+
+    See [5.2 Representing Relationships Between Entities](https://www.w3.org/TR/activitystreams-vocabulary/#connections) for additional information.
+
+  properties:
+    subject: !Simple
+      uri: https://www.w3.org/ns/activitystreams#subject
+      type: Or<Remotable<Object>, Link>
+      kind: !Functional
+      doc: |
+        On a [Relationship] object, the [Relationship::subject] property identifies one of the connected individuals.
+        For instance, for a [Relationship] object describing `John is related to Sally`, [Relationship::subject] would refer to `John`.
+
+    object: !Simple
+      type: Or<LinkSubtypes, Remotable<ObjectSubtypes>>
+      uri: https://www.w3.org/ns/activitystreams#object
+      doc: |
+        Describes the entity to which the [Relationship::subject] is related.
+
+    relationship: !Simple
+      uri: https://www.w3.org/ns/activitystreams#relationship
+      type: String
+      doc: |
+        On a [Relationship] object,
+        the [Relationship::relationship] property identifies the kind of relationship that exists between [Relationship::subject] and [Relationship::object].
+
+Article:
+  uri: https://www.w3.org/ns/activitystreams#Article
+  extends: [Object]
+  subtype_name: ArticleSubtypes
+  doc: Represents any kind of multi-paragraph written work.
+
+Document:
+  uri: https://www.w3.org/ns/activitystreams#Document
+  extends: [Object]
+  subtype_name: DocumentSubtypes
+  doc: Represents a document of any kind.
+
+Audio:
+  uri: https://www.w3.org/ns/activitystreams#Audio
+  extends: [Document]
+  subtype_name: AudioSubtypes
+  doc: Represents an audio document of any kind.
+
+Image:
+  uri: https://www.w3.org/ns/activitystreams#Image
+  extends: [Document]
+  subtype_name: ImageSubtypes
+  doc: An image document of any kind
+
+Video:
+  uri: https://www.w3.org/ns/activitystreams#Video
+  extends: [Document]
+  subtype_name: VideoSubtypes
+  doc: Represents a video document of any kind.
+
+Note:
+  uri: https://www.w3.org/ns/activitystreams#Note
+  extends: [Document]
+  subtype_name: NoteSubtypes
+  doc: Represents a short written work typically less than a single paragraph in length.
+
+Page:
+  uri: https://www.w3.org/ns/activitystreams#Page
+  extends: [Document]
+  subtype_name: PageSubtypes
+  doc: Represents a Web Page.
+
+Event:
+  uri: https://www.w3.org/ns/activitystreams#Event
+  extends: [Object]
+  subtype_name: EventSubtypes
+  doc: Represents any kind of event.
+
+Place:
+  uri: https://www.w3.org/ns/activitystreams#Place
+  extends: [Object]
+  subtype_name: PlaceSubtypes
+  doc: Represents a logical or physical location. See 5.3 Representing Places for additional information.
+  properties:
+    accuracy: !Simple
+      type: f64
+      kind: !Functional
+      uri: https://www.w3.org/ns/activitystreams#accuracy
+      doc: Indicates the accuracy of position coordinates on a [Place] objects.
+        Expressed in properties of percentage. e.g. "94.0" means "94.0% accurate".
+
+    altitude: !Simple
+      type: f64
+      kind: !Functional
+      uri: https://www.w3.org/ns/activitystreams#altitude
+      doc: |
+        Indicates the altitude of a place.
+        The measurement [Place::units] is indicated using the units property.
+        If [Place::units] is not specified, the default is assumed to be "m" indicating meters.
+
+    latitude: !Simple
+      type: f64
+      kind: !Functional
+      uri: https://www.w3.org/ns/activitystreams#latitude
+      doc: The longitude of a place
+
+    longitude: !Simple
+      type: f64
+      kind: !Functional
+      uri: https://www.w3.org/ns/activitystreams#longitude
+      doc: The longitude of a place
+
+    radius: !Simple
+      type: f64
+      kind: !Functional
+      uri: https://www.w3.org/ns/activitystreams#radius
+      doc:
+        The [Place::radius] from the given [Place::latitude] and [Place::longitude] for a [Place].
+        The units is expressed by the [Place::units] property.
+        If [Place::units] is not specified, the default is assumed to be "m" indicating "meters".
+
+    units: !Simple
+      type: Unit
+      uri: https://www.w3.org/ns/activitystreams#units
+      kind: !Functional
+      doc: |
+        Specifies the measurement units for the [Place::radius] and [Place::altitude] properties on a [Place] object.
+        If not specified, the default is assumed to be "m" for "meters".
+
+Mention:
+  uri: https://www.w3.org/ns/activitystreams#Mention
+  extends: [Link]
+  subtype_name: MentionSubtypes
+  doc: |
+    A specialized [Link] that represents an @mention.
+
+Profile:
+  uri: https://www.w3.org/ns/activitystreams#Profile
+  extends: [Object]
+  subtype_name: ProfileSubtypes
+  doc: |
+    A [Profile] is a content object that describes another [ObjectSubtypes],
+    typically used to describe Actor Type objects.
+    The [Profile::describes] property is used to reference the object being described by the profile.
+  properties:
+    describes: !Simple
+      uri: https://www.w3.org/ns/activitystreams#describes
+      kind: !Functional
+      type: Remotable<Object>
+      doc: |
+        On a [Profile] object, the [Profile::describes] property identifies the object described by the Profile.
+
+Tombstone:
+  uri: https://www.w3.org/ns/activitystreams#Tombstone
+  extends: [Object]
+  subtype_name: TombstoneSubtypes
+  doc: |
+    A [Tombstone] represents a content object that has been deleted.
+    It can be used in [Collection]s to signify that there used to be an object at this position, but it has been deleted.
+  properties:
+    former_type: !Simple
+      uri: https://www.w3.org/ns/activitystreams#formerType
+      tag: formerType
+      type: String
+      doc: |
+        On a [Tombstone] object, the [Tombstone::former_type] property identifies the type of the object that was deleted.
+
+    deleted: !Simple
+      uri: https://www.w3.org/ns/activitystreams#deleted
+      type: xsd::DateTime
+      kind: !Functional
+      doc: |
+        On a [Tombstone] object, the [Tombstone::deleted] property is a timestamp for when the object was deleted.

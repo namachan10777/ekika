@@ -1,7 +1,8 @@
 #![feature(async_fn_in_trait)]
-use std::{collections::HashMap, net::SocketAddr, sync::Arc};
+use std::{net::SocketAddr, sync::Arc};
 
-use axum::{response::IntoResponse, routing};
+use aws_sdk_dynamodb::types::AttributeValue;
+use axum::{extract, response::IntoResponse, routing};
 use axum_helper::{headers::ProxyInfo, HttpError, ToHttpErrorJson};
 use clap::Parser;
 use ekika::model::account::Account;
@@ -9,9 +10,14 @@ use once_cell::sync::Lazy;
 use reqwest::StatusCode;
 use serde::Serialize;
 use serde_json::json;
-use tokio::sync::RwLock;
 use tower_http::trace::TraceLayer;
 use tracing::info;
+
+mod ap {
+    use activity_vocabulary::Unit;
+    use activity_vocabulary_core::*;
+    include!(concat!(env!("OUT_DIR"), "/vocab.rs"));
+}
 
 static TEMPLATES: Lazy<handlebars::Handlebars> = Lazy::new(|| {
     let mut registry = handlebars::Handlebars::new();
@@ -49,14 +55,30 @@ async fn host_meta(proxy_info: ProxyInfo) -> Result<impl IntoResponse, HttpError
 }
 
 struct State {
-    accounts: RwLock<HashMap<String, Account>>,
+    ddb: aws_sdk_dynamodb::Client,
+    user_table: String,
 }
 
 impl ekika::webfinger::AccountStore for State {
     type ActorInfo = Account;
 
-    async fn query(&self, name: &str) -> Option<Self::ActorInfo> {
-        self.accounts.read().await.get(name).cloned()
+    async fn query(&self, name: &str) -> Result<Option<Self::ActorInfo>, HttpError> {
+        let item = self
+            .ddb
+            .get_item()
+            .table_name(&self.user_table)
+            .key("Id", AttributeValue::S(name.to_string()))
+            .send()
+            .await
+            .map_err(|e| format!("{e:?}"))
+            .http_error_json(StatusCode::INTERNAL_SERVER_ERROR)?;
+        let Some(item) = item.item else {
+            return Ok(None);
+        };
+        let user = serde_dynamo::aws_sdk_dynamodb_0_30::from_item(item)
+            .map_err(|e| e.to_string())
+            .http_error_json(StatusCode::INTERNAL_SERVER_ERROR)?;
+        Ok(Some(user))
     }
 }
 
@@ -68,13 +90,9 @@ struct Opts {
     json_log: bool,
 }
 
-#[tokio::main]
-async fn main() -> anyhow::Result<()> {
+fn init_logger(json: bool) {
     use tracing_subscriber::prelude::*;
-
-    let opts = Opts::parse();
-
-    if opts.json_log {
+    if json {
         tracing_subscriber::registry()
             .with(
                 tracing_subscriber::EnvFilter::try_from_default_env()
@@ -91,21 +109,48 @@ async fn main() -> anyhow::Result<()> {
             .with(tracing_subscriber::fmt::layer())
             .init();
     }
+}
 
-    let acct_namachan10777 = Account {
-        kind: ekika::model::account::AccountKind::Person,
-        preffered_user_name: "namachan10777".to_owned(),
-        name: "namachan10777".to_owned(),
-        summary: "namachan10777".to_owned(),
-        icon: vec![],
-    };
+async fn ap_get_user(
+    extract::Path(user): extract::Path<String>,
+    extract::State(state): extract::State<Arc<State>>,
+) -> Result<impl IntoResponse, HttpError> {
+    let user = state
+        .ddb
+        .get_item()
+        .table_name(state.user_table.clone())
+        .key("Id", AttributeValue::S(user))
+        .send()
+        .await
+        .map_err(|e| e.to_string())
+        .http_error_json(StatusCode::INTERNAL_SERVER_ERROR)?;
+    let user = user
+        .item
+        .ok_or_else(|| json!({"msg": "not found"}))
+        .http_error_json(StatusCode::NOT_FOUND)?;
+    let user: Account = serde_dynamo::aws_sdk_dynamodb_0_30::from_item(user)
+        .map_err(|e| e.to_string())
+        .http_error_json(StatusCode::INTERNAL_SERVER_ERROR)?;
+    let actor = ap::Person::builder();
+    Ok("unimplemented")
+}
 
-    let state = State {
-        accounts: RwLock::new(maplit::hashmap! {
-            "admin".to_string() => acct_namachan10777,
-        }),
-    };
-    let state = Arc::new(state);
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
+    let opts = Opts::parse();
+
+    init_logger(opts.json_log);
+
+    let sdk_config = aws_config::load_from_env().await;
+    let ddb_config = aws_sdk_dynamodb::config::Builder::from(&sdk_config)
+        .endpoint_url("http://localhost:8000")
+        .build();
+    let ddb = aws_sdk_dynamodb::Client::from_conf(ddb_config);
+
+    let state = Arc::new(State {
+        ddb,
+        user_table: "users".to_string(),
+    });
 
     let router = axum::Router::new()
         .route("/.well-known/host-meta", routing::get(host_meta))
@@ -113,6 +158,7 @@ async fn main() -> anyhow::Result<()> {
             "/.well-known/webfinger",
             routing::get(ekika::webfinger::webfinger),
         )
+        .route("/user/:users", routing::get(ap_get_user))
         .with_state(state)
         .layer(TraceLayer::new_for_http());
     axum::Server::bind(&opts.addr)

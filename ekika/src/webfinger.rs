@@ -8,6 +8,8 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 use tracing::debug;
 
+use crate::model::account::Account;
+
 #[derive(Deserialize, Debug)]
 pub struct WebfingerQuery {
     resource: url::Url,
@@ -37,14 +39,17 @@ pub struct WebfingerResponse {
 
 pub trait AccountStore {
     type ActorInfo;
-    async fn query(&self, name: &str) -> Option<Self::ActorInfo>;
+    async fn query(&self, name: &str) -> Result<Option<Self::ActorInfo>, HttpError>;
 }
 
-pub async fn webfinger<S: AccountStore>(
+pub async fn webfinger<S>(
     axum::extract::Query(query): axum::extract::Query<WebfingerQuery>,
     axum::extract::State(state): axum::extract::State<Arc<S>>,
     proxy_info: ProxyInfo,
-) -> Result<Json<WebfingerResponse>, HttpError> {
+) -> Result<Json<WebfingerResponse>, HttpError>
+where
+    S: AccountStore<ActorInfo = Account>,
+{
     debug!(resource = query.resource.to_string(), "query");
     if query.resource.scheme() != "acct" {
         return Err(HttpError::new_json(
@@ -59,7 +64,7 @@ pub async fn webfinger<S: AccountStore>(
         .ok_or("not_found")
         .http_error_json(StatusCode::NOT_FOUND)?;
     debug!(account = account, "account");
-    if state.query(account).await.is_some() {
+    if state.query(account).await?.is_some() {
         let frontend_profile: url::Url =
             format!("{}://{}/@{account}", proxy_info.proto, proxy_info.host)
                 .parse()

@@ -1,11 +1,10 @@
 version: '3.8'
 services:
-  app:
-    image: namachan10777/micropub:latest
-    command: --addr 0.0.0.0:8080
   dynamodb:
     image: "amazon/dynamodb-local:latest"
-    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    command: "-jar DynamoDBLocal.jar -dbPath /home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
+    user: root
     ports:
       - "8000:8000"
     volumes:
@@ -14,13 +13,17 @@ services:
         target: /home/dynamodblocal/data
   minio:
     image: minio/minio
-    command: server /data --address 0.0.0.0:8000 --console-address 0.0.0.0:9000
+    command: server /data --address 0.0.0.0:10020 --console-address 0.0.0.0:10021
+    environment:
+      - MINIO_ROOT_USER=EkikaAdmin
+      - MINIO_ROOT_PASSWORD=EkikaAdmin
     volumes:
       - type: volume
         source: minio
         target: /data
     ports:
-      - 9000:9000
+      - 10020:10020
+      - 10021:10021
 volumes:
   dynamodb: {}
   minio: {}
