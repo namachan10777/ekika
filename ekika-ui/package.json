@@ -5,7 +5,9 @@
     "node": ">=20.11.1"
   },
   "private": true,
-  "trustedDependencies": ["sharp"],
+  "trustedDependencies": [
+    "sharp"
+  ],
   "scripts": {
     "build": "qwik build",
     "build.client": "vite build",
