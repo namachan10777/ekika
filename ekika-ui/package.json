@@ -39,7 +39,7 @@
     "postcss": "^8.4.38",
     "prettier": "3.2.5",
     "typescript": "5.4.3",
-    "undici": "6.10.2",
+    "undici": "6.11.1",
     "vite": "5.2.7",
     "vite-tsconfig-paths": "4.3.2"
   }
