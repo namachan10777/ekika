@@ -1,4 +1,4 @@
-FROM rust:1.77.0-slim-bookworm as base
+FROM rust:1.77.1-slim-bookworm as base
 WORKDIR /work
 RUN cargo install cargo-chef
 
