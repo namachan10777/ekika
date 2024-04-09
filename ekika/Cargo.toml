@@ -11,9 +11,9 @@ activity-vocabulary.workspace = true
 activity-vocabulary-core.workspace = true
 anyhow.workspace = true
 aws-config = "1.1"
-aws-sdk-dynamodb = "1.20"
-aws-sdk-opensearch = "1.22"
-aws-sdk-s3 = "1.21"
+aws-sdk-dynamodb = "1.21"
+aws-sdk-opensearch = "1.23"
+aws-sdk-s3 = "1.22"
 axum.workspace = true
 axum-extra.workspace = true
 axum-helper = { version = "0.0.1", path = "../axum-helper" }
