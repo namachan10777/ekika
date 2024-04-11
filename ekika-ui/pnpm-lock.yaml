@@ -15,7 +15,7 @@ devDependencies:
     specifier: ~0.0.7
     version: 0.0.7(@types/node@20.12.7)
   '@pandacss/dev':
-    specifier: ^0.37.1
+    specifier: ^0.37.2
     version: 0.37.2(typescript@5.4.4)
   '@types/eslint':
     specifier: 8.56.8
@@ -1478,7 +1478,7 @@ packages:
       '@vue/compiler-ssr': 3.4.19
       '@vue/shared': 3.4.19
       estree-walker: 2.0.2
-      magic-string: 0.30.8
+      magic-string: 0.30.9
       postcss: 8.4.38
       source-map-js: 1.2.0
     dev: true
