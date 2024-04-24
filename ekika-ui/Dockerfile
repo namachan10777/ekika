@@ -5,6 +5,6 @@ COPY ekika-ui /work
 RUN pnpm install
 RUN pnpm run build
 
-FROM nginx:1.25
+FROM nginx:1.26
 COPY ekika-ui/nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /work/dist /www
