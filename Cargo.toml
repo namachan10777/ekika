@@ -11,7 +11,7 @@ async-trait = "0.1"
 activity-vocabulary = "0.0.5"
 activity-vocabulary-core = "0.0.5"
 activity-vocabulary-derive = { version = "0.0.5" }
-anyhow = { version = "1", features = ["backtrace"] }
+anyhow = { version = "1.0.82", features = ["backtrace"] }
 http = "1"
 handlebars = "5"
 metrics = "0.22"
