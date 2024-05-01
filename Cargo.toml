@@ -7,7 +7,7 @@ resolver = "2"
 [workspace.dependencies]
 axum = { version = "0.7", features = ["tracing", "http2", "multipart", "ws"] }
 axum-extra = { version = "0.9", features = ["typed-header"] }
-async-trait = "0.1"
+async-trait = "0.1.80"
 activity-vocabulary = "0.0.5"
 activity-vocabulary-core = "0.0.5"
 activity-vocabulary-derive = { version = "0.0.5" }
