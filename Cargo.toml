@@ -14,7 +14,7 @@ activity-vocabulary-derive = { version = "0.0.5" }
 anyhow = { version = "1.0.82", features = ["backtrace"] }
 http = "1"
 handlebars = "5.1.2"
-metrics = "0.22"
+metrics = "0.22.3"
 mime = "0.3"
 moka = { version = "0.12", features = ["future"] }
 serde = "1"
