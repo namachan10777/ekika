@@ -18,7 +18,7 @@ axum.workspace = true
 axum-extra.workspace = true
 axum-helper = { version = "0.0.1", path = "../axum-helper" }
 handlebars.workspace = true
-clap = { version = "4", features = ["derive", "env"] }
+clap = { version = "4.5.4", features = ["derive", "env"] }
 http = { workspace = true }
 maplit = "1"
 metrics.workspace = true
