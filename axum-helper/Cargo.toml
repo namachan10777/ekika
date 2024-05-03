@@ -13,4 +13,4 @@ serde_json.workspace = true
 async-trait.workspace = true
 http.workspace = true
 serde.workspace = true
-nom = "7"
+nom = "7.1.3"
