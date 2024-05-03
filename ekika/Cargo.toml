@@ -40,7 +40,7 @@ sentry = { version = "0.32", default-features = false, features = [
 sentry-tracing = { version = "0.32", features = ["backtrace"] }
 serde = { workspace = true, features = ["derive"] }
 serde-value.workspace = true
-serde_dynamo = { version = "4", features = ["aws-sdk-dynamodb+1"] }
+serde_dynamo = { version = "4.2.14", features = ["aws-sdk-dynamodb+1"] }
 serde_json.workspace = true
 thiserror.workspace = true
 tokio.workspace = true
