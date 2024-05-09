@@ -2,7 +2,7 @@
   "name": "my-qwik-empty-starter",
   "description": "App with Routing built-in ready to create your app",
   "engines": {
-    "node": ">=20.13.0"
+    "node": ">=20.13.1"
   },
   "private": true,
   "trustedDependencies": [
@@ -31,7 +31,7 @@
     "@builder.io/vite-plugin-macro": "~0.0.7",
     "@pandacss/dev": "^0.37.2",
     "@types/eslint": "8.56.10",
-    "@types/node": "^20.12.10",
+    "@types/node": "^20.12.11",
     "@typescript-eslint/eslint-plugin": "7.8.0",
     "@typescript-eslint/parser": "7.8.0",
     "eslint": "8.57.0",
