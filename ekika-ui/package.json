@@ -26,7 +26,7 @@
     "qwik": "qwik"
   },
   "devDependencies": {
-    "@builder.io/qwik": "^1.5.4",
+    "@builder.io/qwik": "^1.5.5",
     "@builder.io/qwik-city": "^1.5.4",
     "@builder.io/vite-plugin-macro": "~0.0.7",
     "@pandacss/dev": "^0.37.2",
