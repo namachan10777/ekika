@@ -250,9 +250,9 @@ dependencies = [
 
 [[package]]
 name = "aws-sdk-dynamodb"
-version = "1.29.0"
+version = "1.30.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cd1e3d012c9e3563356ac55e5dcf0e1118f0554dcb46d0cd5b960a5ca5535bcc"
+checksum = "ed27a523e0a62345fec212886b542ec842a41b5fbdafc94440802c6f320cfcb3"
 dependencies = [
  "aws-credential-types",
  "aws-runtime",
@@ -273,9 +273,9 @@ dependencies = [
 
 [[package]]
 name = "aws-sdk-opensearch"
-version = "1.31.0"
+version = "1.32.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0cdea3e13a4a83d3f01fed05a4ede66fc24e5adeee761d2f6a5d60c79df04a6b"
+checksum = "5f8c14430bc8927ebcad08293c7d8697a1fd806664e64a8f46164203dab11841"
 dependencies = [
  "aws-credential-types",
  "aws-runtime",
@@ -295,9 +295,9 @@ dependencies = [
 
 [[package]]
 name = "aws-sdk-s3"
-version = "1.30.0"
+version = "1.31.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "57cdcd97b590e00e635b17126a1a8f3199dd05333a2d6a6d810ab6693bf4f674"
+checksum = "67520cfee50a8a075a86e7960a6ff30a0a93f6b83ef36f7dff42a9fad9ec1818"
 dependencies = [
  "ahash",
  "aws-credential-types",
