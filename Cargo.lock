@@ -250,9 +250,9 @@ dependencies = [
 
 [[package]]
 name = "aws-sdk-dynamodb"
-version = "1.32.0"
+version = "1.34.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "56b456ed83e68bf5a1493fb2c3898841676fab73540dd7970dbeb8ce74aae123"
+checksum = "a31b16411fd66223f5b364ef14794eb1a629f71f4d40bb3ad3e20aa3fb44c997"
 dependencies = [
  "aws-credential-types",
  "aws-runtime",
@@ -273,9 +273,9 @@ dependencies = [
 
 [[package]]
 name = "aws-sdk-opensearch"
-version = "1.34.0"
+version = "1.36.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9e7e39d04a922691ae2c7012726ea2ca00d64090b6031d9c76c9076eced7b9ba"
+checksum = "9ba52221dd9573a3163ead93c2dfdb673eb66599ab832f69b499bc3bd7a5b4de"
 dependencies = [
  "aws-credential-types",
  "aws-runtime",
@@ -295,9 +295,9 @@ dependencies = [
 
 [[package]]
 name = "aws-sdk-s3"
-version = "1.34.0"
+version = "1.36.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "724119d8fd2d2638b9979673f3b5c2979fa388c9ca27815e3cb5ad6234fac3f5"
+checksum = "99e06a6cd8592e486f29c8af427c4083286cee4ea0e4ae46a164a24d07ee19d5"
 dependencies = [
  "ahash",
  "aws-credential-types",
@@ -509,9 +509,9 @@ dependencies = [
 
 [[package]]
 name = "aws-smithy-runtime"
-version = "1.5.5"
+version = "1.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d0d3965f6417a92a6d1009c5958a67042f57e46342afb37ca58f9ad26744ec73"
+checksum = "db83b08939838d18e33b5dbaf1a0f048f28c10bd28071ab7ce6f245451855414"
 dependencies = [
  "aws-smithy-async",
  "aws-smithy-http",
@@ -523,6 +523,7 @@ dependencies = [
  "http 0.2.12",
  "http-body 0.4.6",
  "http-body 1.0.0",
+ "httparse",
  "hyper 0.14.29",
  "hyper-rustls 0.24.2",
  "once_cell",
@@ -1455,9 +1456,9 @@ dependencies = [
 
 [[package]]
 name = "httparse"
-version = "1.9.3"
+version = "1.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d0e7a4dd27b9476dc40cb050d3632d3bba3a70ddbff012285f7f8559a1e7e545"
+checksum = "d897f394bad6a705d5f4104762e116a75639e470d80901eed05a860a95cb1904"
 
 [[package]]
 name = "httpdate"
