@@ -35,7 +35,7 @@
     "@typescript-eslint/eslint-plugin": "7.14.1",
     "@typescript-eslint/parser": "7.14.1",
     "eslint": "8.57.0",
-    "eslint-plugin-qwik": "^1.5.7",
+    "eslint-plugin-qwik": "^1.6.0",
     "postcss": "^8.4.38",
     "prettier": "3.3.2",
     "typescript": "5.5.2",
