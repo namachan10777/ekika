@@ -273,9 +273,9 @@ dependencies = [
 
 [[package]]
 name = "aws-sdk-opensearch"
-version = "1.42.0"
+version = "1.43.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a3b5055cc9185a28b57975f5335f4248801419e8ba1b882bee3f732d7d274923"
+checksum = "0a799e202f873b684cb26182dbbd46b199e10a994528c3f08bf2f76856b29fb2"
 dependencies = [
  "aws-credential-types",
  "aws-runtime",
