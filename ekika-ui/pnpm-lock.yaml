@@ -12,8 +12,8 @@ importers:
         specifier: ^1.7.2
         version: 1.7.2(@types/node@20.14.13)(lightningcss@1.23.0)
       '@builder.io/qwik-city':
-        specifier: ^1.7.1
-        version: 1.7.1(@types/node@20.14.13)(lightningcss@1.23.0)(rollup@4.19.1)
+        specifier: ^1.7.3
+        version: 1.7.3(@types/node@20.14.13)(lightningcss@1.23.0)(rollup@4.19.1)
       '@builder.io/vite-plugin-macro':
         specifier: ~0.0.7
         version: 0.0.7(@types/node@20.14.13)(lightningcss@1.23.0)(rollup@4.19.1)
@@ -76,8 +76,8 @@ packages:
     resolution: {integrity: sha512-LcnxQSsd9aXOIgmmSpvZ/1yo46ra2ESYyqLcryaBZOghxy5qqOBjvCWP5JfkI8yl9rlxRgdLTTMCQQRcN2hdCg==}
     engines: {node: '>=6.9.0'}
 
-  '@builder.io/qwik-city@1.7.1':
-    resolution: {integrity: sha512-c+H4RqPr2l+js5INVf0C8B/8V4juTCFfcBGrpwhLD7cXe97V4DwOkDFZkBJcI9ThxWb9lHfQNTlQ8gRFcUlHbQ==}
+  '@builder.io/qwik-city@1.7.3':
+    resolution: {integrity: sha512-ZCD8HQ4AmSaBCENaDeFDh3h5drxjUi44miEUSnBf73gSACDSChq70LaM+Y2wwoaArDT6OQ3YzuN/lzFpFWynQg==}
     engines: {node: '>=16.8.0 <18.0.0 || >=18.11'}
 
   '@builder.io/qwik@1.7.2':
@@ -2567,7 +2567,7 @@ snapshots:
       '@babel/helper-validator-identifier': 7.24.7
       to-fast-properties: 2.0.0
 
-  '@builder.io/qwik-city@1.7.1(@types/node@20.14.13)(lightningcss@1.23.0)(rollup@4.19.1)':
+  '@builder.io/qwik-city@1.7.3(@types/node@20.14.13)(lightningcss@1.23.0)(rollup@4.19.1)':
     dependencies:
       '@mdx-js/mdx': 3.0.1
       '@types/mdx': 2.0.13
