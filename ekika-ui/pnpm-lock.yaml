@@ -48,8 +48,8 @@ importers:
         specifier: 5.5.4
         version: 5.5.4
       undici:
-        specifier: 6.19.4
-        version: 6.19.4
+        specifier: 6.19.5
+        version: 6.19.5
       vite:
         specifier: 5.3.5
         version: 5.3.5(@types/node@20.14.13)(lightningcss@1.23.0)
@@ -2395,8 +2395,8 @@ packages:
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  undici@6.19.4:
-    resolution: {integrity: sha512-i3uaEUwNdkRq2qtTRRJb13moW5HWqviu7Vl7oYRYz++uPtGHJj+x7TGjcEuwS5Mt2P4nA0U9dhIX3DdB6JGY0g==}
+  undici@6.19.5:
+    resolution: {integrity: sha512-LryC15SWzqQsREHIOUybavaIHF5IoL0dJ9aWWxL/PgT1KfqAW5225FZpDUFlt9xiDMS2/S7DOKhFWA7RLksWdg==}
     engines: {node: '>=18.17'}
 
   unified@11.0.5:
@@ -2573,7 +2573,7 @@ snapshots:
       '@types/mdx': 2.0.13
       source-map: 0.7.4
       svgo: 3.3.2
-      undici: 6.19.4
+      undici: 6.19.5
       vfile: 6.0.2
       vite: 5.3.5(@types/node@20.14.13)(lightningcss@1.23.0)
       vite-imagetools: 6.2.9(rollup@4.19.1)
@@ -5243,7 +5243,7 @@ snapshots:
 
   undici-types@5.26.5: {}
 
-  undici@6.19.4: {}
+  undici@6.19.5: {}
 
   unified@11.0.5:
     dependencies:
