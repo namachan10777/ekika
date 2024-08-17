@@ -250,9 +250,9 @@ dependencies = [
 
 [[package]]
 name = "aws-sdk-dynamodb"
-version = "1.40.0"
+version = "1.42.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a9823562d8b2578e719465f911024f2862dc430a4d962f233119a8cbeca0bb35"
+checksum = "6aadafd673822026e7ae6be7900c7886f609514b620874c9e3054f4ae38ab82f"
 dependencies = [
  "aws-credential-types",
  "aws-runtime",
@@ -273,9 +273,9 @@ dependencies = [
 
 [[package]]
 name = "aws-sdk-opensearch"
-version = "1.46.0"
+version = "1.48.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "04d63399863b68a3a3835b23b039753ef5d24757ade10af70aaac31ac2821333"
+checksum = "f908818eaa524eafd4d00f2dc0eacf4ad119f6a47ccac6c2b18d2e6f0c0e2825"
 dependencies = [
  "aws-credential-types",
  "aws-runtime",
@@ -295,9 +295,9 @@ dependencies = [
 
 [[package]]
 name = "aws-sdk-s3"
-version = "1.43.0"
+version = "1.45.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9ccda7e730ace3cb8bbd4071bc650c6d294364891f9564bd4e43adfc8dea3177"
+checksum = "75c7d2b6b693a1cf14f12937a7bbe65fdb329a5d77a5c56372bac9cd1fac7cef"
 dependencies = [
  "ahash",
  "aws-credential-types",
@@ -509,9 +509,9 @@ dependencies = [
 
 [[package]]
 name = "aws-smithy-runtime"
-version = "1.6.2"
+version = "1.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ce87155eba55e11768b8c1afa607f3e864ae82f03caf63258b37455b0ad02537"
+checksum = "0abbf454960d0db2ad12684a1640120e7557294b0ff8e2f11236290a1b293225"
 dependencies = [
  "aws-smithy-async",
  "aws-smithy-http",
@@ -553,9 +553,9 @@ dependencies = [
 
 [[package]]
 name = "aws-smithy-types"
-version = "1.2.0"
+version = "1.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cfe321a6b21f5d8eabd0ade9c55d3d0335f3c3157fc2b3e87f05f34b539e4df5"
+checksum = "6cee7cadb433c781d3299b916fbf620fea813bf38f49db282fb6858141a05cc8"
 dependencies = [
  "base64-simd",
  "bytes",
