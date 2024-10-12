@@ -22,7 +22,7 @@ clap = { version = "4.5.4", features = ["derive", "env"] }
 http = { workspace = true }
 maplit = "1.0.2"
 metrics.workspace = true
-metrics-exporter-prometheus = { version = "0.14", default-features = false, features = [
+metrics-exporter-prometheus = { version = "0.16", default-features = false, features = [
     "http-listener",
 ] }
 moka.workspace = true
