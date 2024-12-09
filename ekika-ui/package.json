@@ -29,7 +29,7 @@
     "@builder.io/qwik": "^1.8.0",
     "@builder.io/qwik-city": "^1.8.0",
     "@builder.io/vite-plugin-macro": "~0.0.7",
-    "@pandacss/dev": "^0.37.2",
+    "@pandacss/dev": "^0.49.0",
     "@types/eslint": "8.56.11",
     "@types/node": "^20.16.0",
     "@typescript-eslint/eslint-plugin": "7.18.0",
